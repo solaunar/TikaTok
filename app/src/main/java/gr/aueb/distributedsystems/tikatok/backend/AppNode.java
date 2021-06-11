@@ -257,7 +257,7 @@ public class AppNode extends Node {
         if (response == 1) {
             isPublisher = true;
             System.out.println("Please specify the directory that contains the mp4 and hashtags folders for your existent videos.");
-            while (this.userDirectory.isBlank())
+            while (this.userDirectory.equals(""))
                 this.userDirectory = appNodeInput.nextLine();
             //and start a new thread to handle BROKER requests that need to pull video from this publisher
             //as well as start the AppNode server

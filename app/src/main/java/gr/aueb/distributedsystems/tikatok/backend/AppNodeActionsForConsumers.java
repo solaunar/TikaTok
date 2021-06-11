@@ -94,7 +94,7 @@ public class AppNodeActionsForConsumers extends Thread {
                     updateInfoTable();
                     System.out.println("Please type the topic (channel or hashtag) you want to look up...");
                     System.out.println("If you want to look up a hashtag, please add '#' in front of the word.");
-                    while (input.isBlank()) {
+                    while (input.equals("")) {
                         input = appNode.getAppNodeInput().nextLine();
                     }
                     Address brokerAddress = find(input.toLowerCase());
@@ -149,7 +149,7 @@ public class AppNodeActionsForConsumers extends Thread {
                     }
                     System.out.println("Please choose one of the videos in the list.");
                     String videoChosen = appNode.getAppNodeInput().nextLine();
-                    while (videoChosen.isBlank()) {
+                    while (videoChosen.equals("")) {
                         videoChosen = appNode.getAppNodeInput().nextLine();
                     }
                     out.writeObject(getVideo(videoList, videoChosen.toLowerCase()));
@@ -171,7 +171,7 @@ public class AppNodeActionsForConsumers extends Thread {
 
                     System.out.println("Please type a path to save the videofile.");
                     String videoPath = appNode.getAppNodeInput().nextLine();
-                    while (videoPath.isBlank()) {
+                    while (videoPath.equals("")) {
                         videoPath = appNode.getAppNodeInput().nextLine();
                     }
                     FileOutputStream fos = new FileOutputStream(videoPath + videoChosen.toLowerCase() + ".mp4");
@@ -194,7 +194,7 @@ public class AppNodeActionsForConsumers extends Thread {
                     updateInfoTable();
                     System.out.println("Please type the topic (channel or hashtag) you want to subscribe to...");
                     System.out.println("If you want to subscribe to a hashtag, please add '#' in front of the word.");
-                    while (input.isBlank()) {
+                    while (input.equals("")) {
                         input = appNode.getAppNodeInput().nextLine();
                     }
                     Address brokerAddress = find(input.toLowerCase());
@@ -274,7 +274,7 @@ public class AppNodeActionsForConsumers extends Thread {
                     }
                     System.out.println("Please choose one of the videos in the list.");
                     String videoChosen = appNode.getAppNodeInput().nextLine();
-                    while (videoChosen.isBlank()) {
+                    while (videoChosen.equals("")) {
                         videoChosen = appNode.getAppNodeInput().nextLine();
                     }
                     out.writeObject(getVideo(videoList, videoChosen.toLowerCase()));
@@ -296,7 +296,7 @@ public class AppNodeActionsForConsumers extends Thread {
 
                     System.out.println("Please type a path to save the videofile.");
                     String videoPath = appNode.getAppNodeInput().nextLine();
-                    while (videoPath.isBlank()) {
+                    while (videoPath.equals("")) {
                         videoPath = appNode.getAppNodeInput().nextLine();
                     }
                     FileOutputStream fos = new FileOutputStream(videoPath + videoChosen.toLowerCase() + ".mp4");
@@ -483,14 +483,14 @@ public class AppNodeActionsForConsumers extends Thread {
                 "Format: C:/.../video.mp4");
         String directory = "";
         directory = appNode.getAppNodeInput().nextLine();
-        while (directory.isBlank()) {
+        while (directory.equals("")) {
             directory = appNode.getAppNodeInput().nextLine();
         }
         System.out.println("Please type in the hashtags you want to associate with this video.\n" +
                 "Format: #hashtag1,#hashtag2,#hashtag3,... (all hashtags split by commas)");
         String hashtagsInline = "";
         hashtagsInline = appNode.getAppNodeInput().nextLine();
-        while (hashtagsInline.isBlank()) {
+        while (hashtagsInline.equals("")) {
             hashtagsInline = appNode.getAppNodeInput().nextLine();
         }
         ArrayList<String> hashtags = new ArrayList<>(Arrays.asList(hashtagsInline.toLowerCase().replace(" ", "").split(",")));

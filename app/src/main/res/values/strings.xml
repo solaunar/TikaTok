@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TikaTok</string>
+    <string name="txtSubmitBtn">Submit</string>
+    <string name="txtEnterUsername">Enter your username</string>
+    <string name="hintUsername">user1</string>
+    <string name="txtLogin">LOG IN</string>
+    <string name="txtSearchTopics">Search for any hashtag or channel name</string>
 </resources>

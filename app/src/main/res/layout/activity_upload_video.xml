@@ -4,47 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.UploadVideoActivity">
 
-    <TextView
-        android:id="@+id/idEnterUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txtEnterUsername"
-        android:textSize="20sp"
+    <EditText
+        android:id="@+id/editTextHashtags"
+        android:layout_width="236dp"
+        android:layout_height="94dp"
+        android:ems="10"
+        android:hint="#hashtag1, #hashtag2, ..."
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintVertical_bias="0.194" />
 
-    <EditText
-        android:id="@+id/editTxtUsername"
+    <TextView
+        android:id="@+id/txtAddHashtags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/hintUsername"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Add the hashtags of the video:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextHashtags"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idEnterUsername"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
 
     <Button
-        android:id="@+id/btnSubmitLogin"
+        android:id="@+id/btnRecord"
+        android:layout_width="109dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="36dp"
+        android:text="Record"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnBrowse"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnBrowse"
+        android:layout_width="108dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="72dp"
+        android:text="BROWSE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSelectedFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txtLogin"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtUsername"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647" />
+
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
+
+    <TextView
+        android:id="@+id/txtAddVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add video for upload"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHashtags"
+        app:layout_constraintVertical_bias="0.131" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -107,5 +153,8 @@
             tools:layout_editor_absoluteY="434dp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TikaTok">
+        <activity android:name=".activities.MyVideosActivity"></activity>
+        <activity android:name=".activities.SubscribedVideosActivity" />
+        <activity android:name=".activities.SearchResultsActivity" />
+        <activity android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.UploadVideoActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
