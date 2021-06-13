@@ -34,6 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="My Videos"
+            android:backgroundTint="@color/sand"
+            android:textColor="@color/leaf_shadow"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="16sp"
             tools:layout_editor_absoluteX="29dp"
@@ -71,7 +73,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewMyVideos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Videos"
@@ -81,4 +83,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.111" />
+
+    <fragment
+        android:id="@+id/fragmentSubscribedVideos"
+        android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.MyFileVideoTitleFragment"
+        android:layout_width="375dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMyVideos"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_my_file_video_title_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

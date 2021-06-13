@@ -43,6 +43,8 @@
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:text="Subscribe"
+        android:backgroundTint="@color/iris"
+        android:textColor="@color/leaf_shadow"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

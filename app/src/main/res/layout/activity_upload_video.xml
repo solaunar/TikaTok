@@ -130,6 +130,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Upload"
+            android:backgroundTint="@color/sand"
+            android:textColor="@color/leaf_shadow"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="16sp"
             tools:layout_editor_absoluteX="29dp"
