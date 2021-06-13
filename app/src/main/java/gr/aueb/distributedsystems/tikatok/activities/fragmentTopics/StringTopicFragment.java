@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import gr.aueb.distributedsystems.tikatok.R;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a list of Items.
