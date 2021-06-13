@@ -3,6 +3,7 @@ package gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,18 +13,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import gr.aueb.distributedsystems.tikatok.R;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.placeholder.PlaceholderContent;
+import java.io.File;
+import java.util.List;
 
+import gr.aueb.distributedsystems.tikatok.R;
 /**
  * A fragment representing a list of Items.
  */
 public class FileVideoTitleFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+
+    private FileVideoTitleFragment.OnFragmentInteractionListener listener;
+
+    public interface OnFragmentInteractionListener {
+        public void onPlay(File video);
+        public void onDownload(File video);
+        public List<File> getVideos();
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,7 +40,6 @@ public class FileVideoTitleFragment extends Fragment {
     public FileVideoTitleFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static FileVideoTitleFragment newInstance(int columnCount) {
         FileVideoTitleFragment fragment = new FileVideoTitleFragment();
@@ -56,6 +63,7 @@ public class FileVideoTitleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_file_video_title_list, container, false);
 
+        List<File> videos = listener.getVideos();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -65,8 +73,25 @@ public class FileVideoTitleFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new FileVideoTitleRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new FileVideoTitleRecyclerViewAdapter(videos, listener));
         }
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof FileVideoTitleFragment.OnFragmentInteractionListener){
+            this.listener = (FileVideoTitleFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 }

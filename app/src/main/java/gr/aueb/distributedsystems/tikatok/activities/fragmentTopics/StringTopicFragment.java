@@ -22,9 +22,9 @@ import gr.aueb.distributedsystems.tikatok.R;
  */
 public class StringTopicFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnFragmentInteractionListener listener;
 
@@ -40,8 +40,6 @@ public class StringTopicFragment extends Fragment {
     public StringTopicFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static StringTopicFragment newInstance(int columnCount) {
         StringTopicFragment fragment = new StringTopicFragment();
         Bundle args = new Bundle();

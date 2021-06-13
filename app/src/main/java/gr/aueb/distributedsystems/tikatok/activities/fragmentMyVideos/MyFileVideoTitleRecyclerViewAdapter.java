@@ -2,40 +2,47 @@ package gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.placeholder.PlaceholderContent.PlaceholderItem;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.databinding.FragmentMyFileVideoTitleBinding;
-
+import gr.aueb.distributedsystems.tikatok.R;
+import java.io.File;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyFileVideoTitleRecyclerViewAdapter extends RecyclerView.Adapter<MyFileVideoTitleRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final List<File> mValues;
+    private MyFileVideoTitleFragment.OnFragmentInteractionListener listener;
 
-    public MyFileVideoTitleRecyclerViewAdapter(List<PlaceholderItem> items) {
+    public MyFileVideoTitleRecyclerViewAdapter(List<File> items, MyFileVideoTitleFragment.OnFragmentInteractionListener listener) {
         mValues = items;
+        this.listener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentMyFileVideoTitleBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.fragment_my_file_video_title, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        final File video = mValues.get(position);
+        holder.mItem = video;
+        String videoTitle = video.getPath();
+        videoTitle = videoTitle.substring(videoTitle.lastIndexOf('\\') + 1, videoTitle.indexOf(".mp4"));
+        holder.txtMyFileVideoTitle.setText(videoTitle);
+        holder.imageButtonDeleteVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDelete(video);
+            }
+        });
     }
 
     @Override
@@ -44,19 +51,21 @@ public class MyFileVideoTitleRecyclerViewAdapter extends RecyclerView.Adapter<My
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public final TextView txtMyFileVideoTitle;
+        public final ImageButton imageButtonDeleteVideo;
+        public File mItem;
+        public final View mView;
 
-        public ViewHolder(FragmentMyFileVideoTitleBinding binding) {
-            super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+        public ViewHolder(View view) {
+            super(view);
+            mView = view;
+            txtMyFileVideoTitle = view.findViewById(R.id.txtFileVideoTitle);
+            imageButtonDeleteVideo = view.findViewById(R.id.imageButtonDeleteVideo);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + txtMyFileVideoTitle.getText() + "'";
         }
     }
 }

@@ -12,18 +12,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import gr.aueb.distributedsystems.tikatok.R;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.placeholder.PlaceholderContent;
+import java.io.File;
+import java.util.List;
 
+import gr.aueb.distributedsystems.tikatok.R;
 /**
  * A fragment representing a list of Items.
  */
 public class MyFileVideoTitleFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+
+    private MyFileVideoTitleFragment.OnFragmentInteractionListener listener;
+
+    public interface OnFragmentInteractionListener {
+        public void onDelete(File video);
+        public List<File> getVideos();
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,7 +39,6 @@ public class MyFileVideoTitleFragment extends Fragment {
     public MyFileVideoTitleFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static MyFileVideoTitleFragment newInstance(int columnCount) {
         MyFileVideoTitleFragment fragment = new MyFileVideoTitleFragment();
@@ -56,6 +62,7 @@ public class MyFileVideoTitleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_file_video_title_list, container, false);
 
+        List<File> videos = listener.getVideos();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -65,7 +72,7 @@ public class MyFileVideoTitleFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyFileVideoTitleRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new MyFileVideoTitleRecyclerViewAdapter(videos, listener));
         }
         return view;
     }
