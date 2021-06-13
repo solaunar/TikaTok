@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".activities.fragmentMyVideos.FileVideoTitleFragment"
+    tools:context=".activities.fragmentOtherUserVideos.FileVideoTitleFragment"
     tools:listitem="@layout/fragment_file_video_title" />

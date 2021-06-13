@@ -108,9 +108,10 @@
 
         <ImageButton
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/btn_star"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="7dp"
+            android:background="@drawable/ic_home_app"
             tools:layout_editor_absoluteX="180dp"
             tools:layout_editor_absoluteY="577dp" />
 

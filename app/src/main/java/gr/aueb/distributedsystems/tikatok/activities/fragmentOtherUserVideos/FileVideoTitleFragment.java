@@ -1,4 +1,4 @@
-package gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos;
+package gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import gr.aueb.distributedsystems.tikatok.R;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.placeholder.PlaceholderContent;
+import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.placeholder.PlaceholderContent;
 
 /**
  * A fragment representing a list of Items.

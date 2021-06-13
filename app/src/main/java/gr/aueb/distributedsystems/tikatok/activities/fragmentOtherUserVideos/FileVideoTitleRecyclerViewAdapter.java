@@ -1,14 +1,13 @@
-package gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos;
+package gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.placeholder.PlaceholderContent.PlaceholderItem;
-import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.databinding.FragmentFileVideoTitleBinding;
+import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.placeholder.PlaceholderContent.PlaceholderItem;
+import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.databinding.FragmentFileVideoTitleBinding;
 
 import java.util.List;
 

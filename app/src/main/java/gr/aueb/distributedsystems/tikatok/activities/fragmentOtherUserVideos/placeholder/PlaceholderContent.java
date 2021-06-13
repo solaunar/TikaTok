@@ -1,4 +1,4 @@
-package gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.placeholder;
+package gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.placeholder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

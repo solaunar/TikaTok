@@ -22,9 +22,10 @@
 
         <ImageButton
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/btn_star"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="7dp"
+            android:background="@drawable/ic_home_app"
             tools:layout_editor_absoluteX="180dp"
             tools:layout_editor_absoluteY="577dp" />
 
@@ -85,7 +86,7 @@
 
     <fragment
         android:id="@+id/fragmentSubscribedVideos"
-        android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.FileVideoTitleFragment"
+        android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleFragment"
         android:layout_width="375dp"
         android:layout_height="500dp"
         android:layout_marginTop="20dp"
