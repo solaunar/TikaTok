@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TikaTok">
         <activity android:name=".activities.VideoStreamActivity"></activity>
-        <activity android:name=".activities.MyVideosActivity" />
+        <activity android:name=".activities.MyVideosActivity" android:exported="true"/>
         <activity android:name=".activities.SubscribedVideosActivity" />
         <activity android:name=".activities.SearchResultsActivity" />
         <activity android:name=".activities.SearchActivity" />
