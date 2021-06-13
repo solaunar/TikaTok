@@ -60,9 +60,10 @@
 
         <ImageButton
             android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/btn_dialog"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_exit_app"
             tools:layout_editor_absoluteX="177dp"
             tools:layout_editor_absoluteY="434dp" />
 
