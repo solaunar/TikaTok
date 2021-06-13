@@ -59,7 +59,7 @@ public class MyFileVideoTitleRecyclerViewAdapter extends RecyclerView.Adapter<My
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            txtMyFileVideoTitle = view.findViewById(R.id.txtFileVideoTitle);
+            txtMyFileVideoTitle = view.findViewById(R.id.txtMyFileVideoTitle);
             imageButtonDeleteVideo = view.findViewById(R.id.imageButtonDeleteVideo);
         }
 

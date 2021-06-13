@@ -17,14 +17,14 @@ import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    AppNode appNode;
+//    AppNode appNode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
-        Address address = new Address(ip, 5000);
+//        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+//        String ip = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+//        Address address = new Address(ip, 5000);
     }
 }

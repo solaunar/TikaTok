@@ -3,6 +3,7 @@ package gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,8 +25,7 @@ public class MyFileVideoTitleFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
-
-    private MyFileVideoTitleFragment.OnFragmentInteractionListener listener;
+    private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
         public void onDelete(File video);
@@ -75,5 +75,22 @@ public class MyFileVideoTitleFragment extends Fragment {
             recyclerView.setAdapter(new MyFileVideoTitleRecyclerViewAdapter(videos, listener));
         }
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof MyFileVideoTitleFragment.OnFragmentInteractionListener){
+            this.listener = (MyFileVideoTitleFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 }

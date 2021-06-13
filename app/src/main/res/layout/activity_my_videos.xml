@@ -85,7 +85,7 @@
         app:layout_constraintVertical_bias="0.111" />
 
     <fragment
-        android:id="@+id/fragmentSubscribedVideos"
+        android:id="@+id/fragmentMyVideos"
         android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.MyFileVideoTitleFragment"
         android:layout_width="375dp"
         android:layout_height="500dp"
