@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TikaTok">
-        <activity android:name=".activities.VideoStreamActivity"></activity>
+        <activity android:name=".activities.VideoStreamActivity" android:exported="true"></activity>
         <activity android:name=".activities.MyVideosActivity" android:exported="true"/>
-        <activity android:name=".activities.SubscribedVideosActivity" />
-        <activity android:name=".activities.SearchResultsActivity" />
-        <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".activities.UploadVideoActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.SubscribedVideosActivity" android:exported="true"/>
+        <activity android:name=".activities.SearchResultsActivity" android:exported="true"/>
+        <activity android:name=".activities.SearchActivity" android:exported="true"/>
+        <activity android:name=".activities.UploadVideoActivity" android:exported="true"/>
+        <activity android:name=".activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
