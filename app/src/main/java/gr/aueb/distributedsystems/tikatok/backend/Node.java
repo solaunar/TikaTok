@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Node implements Serializable {
     //Broker Addresses (ip, port)
     static public final ArrayList<Address> BROKER_ADDRESSES = new ArrayList<>(Arrays.asList(
-            new Address("127.0.0.1", 5000),
+            new Address("10.0.2.2", 5000),
             new Address("127.0.0.1", 5250),
             new Address("127.0.0.1", 5500)));
 

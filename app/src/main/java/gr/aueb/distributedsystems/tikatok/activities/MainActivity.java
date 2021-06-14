@@ -56,7 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     appNode.setChannel(new Channel(username));
                     System.out.println(appNode.getChannel());
-                    connectToBroker();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            connectToBroker();
+                        }
+                    });
+                    t.start();
                     //goToSearch(appNode);
                 }
             }
