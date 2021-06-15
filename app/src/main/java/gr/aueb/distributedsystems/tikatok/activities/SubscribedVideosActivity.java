@@ -3,7 +3,11 @@ package gr.aueb.distributedsystems.tikatok.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,10 +16,20 @@ import java.util.List;
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleFragment;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleRecyclerViewAdapter;
+import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 
 public class SubscribedVideosActivity extends AppCompatActivity implements FileVideoTitleFragment.OnFragmentInteractionListener {
     List <File> subbed_videos;
     RecyclerView subbedFragment;
+    static final String APPNODE_USER = "appNode_user";
+    AppNode user;
+
+    /**Toolbar Buttons*/
+    Button btnMyVids;
+    Button btnUpload;
+    ImageButton btnHome;
+    ImageButton btnLogout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +39,76 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
         subbedFragment = findViewById(R.id.fragmentSubscribedVideos);
         FileVideoTitleRecyclerViewAdapter adapter = new FileVideoTitleRecyclerViewAdapter(getVideos(), this);
         subbedFragment.setAdapter(adapter);
+
+        Intent i = getIntent();
+        user = (AppNode) i.getSerializableExtra(APPNODE_USER);
+        System.out.println("SubscribedVideosActivity user: " + user.getChannel());
+
+        /** Toolbar Buttons */
+
+        btnMyVids = findViewById(R.id.btnMyVideosAction);
+        btnMyVids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMyVids(user);
+            }
+        });
+
+        btnUpload = findViewById(R.id.btnUploadAction);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToUploads(user);
+            }
+        });
+
+        btnHome = findViewById(R.id.btnLogin);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHome(user);
+            }
+        });
+
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLogout(user);
+            }
+        });
+
+    }
+
+    private void goToLogout(AppNode user) {
+        Intent logoutActivityScreen = new Intent(getApplicationContext(), MainActivity.class);
+        logoutActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(logoutActivityScreen);
+    }
+
+    private void goToHome(AppNode user) {
+        Intent homeActivityScreen = new Intent(getApplicationContext(), SearchActivity.class);
+        homeActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(homeActivityScreen);
+    }
+
+    private void goToUploads(AppNode user) {
+        Intent uploadsActivityScreen = new Intent(getApplicationContext(), UploadVideoActivity.class);
+        uploadsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(uploadsActivityScreen);
+    }
+
+    private void goToMyVids(AppNode user) {
+        Intent myVidsActivityScreen = new Intent(getApplicationContext(), MyVideosActivity.class);
+        myVidsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(myVidsActivityScreen);
     }
 
     @Override
     public void onPlay(File video) {
-
+        Intent videoStrActivityScreen = new Intent(getApplicationContext(), VideoStreamActivity.class);
+        videoStrActivityScreen.putExtra(VideoStreamActivity.APPNODE_USER, user);
+        startActivity(videoStrActivityScreen);
     }
 
     @Override

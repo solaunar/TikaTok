@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     t.start();
-                    //goToSearch(appNode);
+                    goToSearch(appNode);
                 }
             }
         });
