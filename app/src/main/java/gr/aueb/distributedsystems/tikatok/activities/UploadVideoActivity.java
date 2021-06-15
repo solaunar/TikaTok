@@ -39,11 +39,11 @@ public class UploadVideoActivity extends AppCompatActivity {
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("UploadVideoActivity user: " + user.getChannel());
 
-        btnRecord = findViewById(R.id.btnRecord);
-        btnRecord.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnRecord).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                startActivityForResult(intent, VIDEO_REQUEST);
             }
         });
 
@@ -83,13 +83,13 @@ public class UploadVideoActivity extends AppCompatActivity {
 
     public void captureVideo (View view){
         Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        startActivityForResult (videoIntent, 1);
+        startActivityForResult (videoIntent, VIDEO_REQUEST);
     }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 1) {
+        if (resultCode == RESULT_OK && requestCode == VIDEO_REQUEST) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             VideoView videoView = new VideoView(this);
             videoView.setVideoURI(data.getData());
