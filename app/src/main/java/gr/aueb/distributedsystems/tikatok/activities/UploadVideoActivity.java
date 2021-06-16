@@ -2,22 +2,40 @@ package gr.aueb.distributedsystems.tikatok.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.VideoView;
+
+import java.io.File;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 
 public class UploadVideoActivity extends AppCompatActivity {
+
+    TextView filePath;
+    EditText hashtags;
+    EditText title;
+    Button btnUpload;
 
     /**Toolbar Buttons*/
     Button btnSubs;
@@ -31,6 +49,7 @@ public class UploadVideoActivity extends AppCompatActivity {
 
     private static int VIDEO_REQUEST = 101;
     private Uri videoUri;
+    private String videoTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +59,26 @@ public class UploadVideoActivity extends AppCompatActivity {
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("UploadVideoActivity user: " + user.getChannel());
+
+        filePath = findViewById(R.id.txtSelectedFile);
+        hashtags = findViewById(R.id.editTextHashtags);
+        title = findViewById(R.id.editTextTitle);
+        btnUpload = findViewById(R.id.btnUpload);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if (videoUri == null){
+                   showErrorMessage("Warning!", "You must choose a video first!");
+               }
+               else if (!isValidTitle()){
+                   showErrorMessage("Warning!", "You must choose a video title containing only English characters!");
+               }
+               else{
+                   ArrayList<String> hashtagsList = getHashtags();
+                   System.out.println(hashtagsList);
+               }
+            }
+        });
 
         /** Record Button */
         btnRecord = findViewById(R.id.btnRecord);
@@ -85,6 +124,66 @@ public class UploadVideoActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isValidTitle() {
+        videoTitle = title.getText().toString();
+        Log.i("VIDEO_TITLE", "Video Title set as: " + videoTitle);
+        if (videoTitle.isEmpty()) return false;
+        Pattern pt = Pattern.compile("^[a-zA-Z]+$");
+        Matcher test = pt.matcher(videoTitle); //CAST TO STRING
+        return test.matches();
+    }
+
+    private ArrayList<String> getHashtags() {
+        String hashtagsRaw = hashtags.getText().toString();
+        if (hashtagsRaw.isEmpty()) return null;
+        ArrayList<String> hashtagsList = new ArrayList<>(Arrays.asList(hashtagsRaw.toLowerCase().replace(" ", "").split(",")));
+        return hashtagsList;
+    }
+
+    public void showErrorMessage(String title, String msg) {
+        new AlertDialog.Builder(UploadVideoActivity.this)
+                .setCancelable(true)
+                .setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton(R.string.ok, null).create().show();
+    }
+
+    public static String getFilePathFromContentUri(Uri contentUri, ContentResolver contentResolver) {
+        String filePath;
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+
+        Cursor cursor = contentResolver.query(contentUri, filePathColumn, null, null, null);
+
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        filePath = cursor.getString(columnIndex);
+        cursor.close();
+        return filePath;
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
     /** Video capture */
     public void captureVideo (View view){
         Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -106,9 +205,12 @@ public class UploadVideoActivity extends AppCompatActivity {
             VideoView videoView = new VideoView(this);
             videoUri = data.getData();
             Log.i("VIDEO_TB_UPLOADED", "Video available at " + videoUri.toString());
+            //Log.i("VIDEO_TB_UPLOADED", "Video available at path " + new File(videoUri.getPath()));
+
             videoView.setVideoURI(data.getData());
             videoView.start();
             builder.setView(videoView).show();
+            filePath.setText("Selected video: " + getFileName(videoUri));
         }
     }
 
@@ -137,4 +239,5 @@ public class UploadVideoActivity extends AppCompatActivity {
         SubsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
         startActivity(SubsActivityScreen);
     }
+
 }

@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.UploadVideoActivity">
 
+    <TextView
+        android:id="@+id/txtAddTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:text="Add a title:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.483" />
+
+    <EditText
+        android:id="@+id/editTextTitle"
+        android:layout_width="240dp"
+        android:layout_height="38dp"
+        android:ems="10"
+        android:hint="MyVideo"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.351" />
+
     <EditText
         android:id="@+id/editTextHashtags"
         android:layout_width="236dp"
@@ -16,10 +44,10 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.194" />
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
         android:id="@+id/txtAddHashtags"
@@ -29,33 +57,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextHashtags"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.79" />
-
-    <Button
-        android:id="@+id/btnRecord"
-        android:layout_width="109dp"
-        android:layout_height="71dp"
-        android:layout_marginEnd="36dp"
-        android:text="RECORD"
-        android:onClick="captureVideo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnBrowse"
-        app:layout_constraintHorizontal_bias="0.872"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnBrowse"
-        android:layout_width="108dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="72dp"
-        android:text="BROWSE"
-        android:onClick="openFileChooser"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.788" />
 
     <TextView
         android:id="@+id/txtSelectedFile"
@@ -67,7 +72,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.691" />
 
     <Button
         android:id="@+id/btnUpload"
@@ -89,10 +94,35 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextHashtags"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.341" />
+
+    <Button
+        android:id="@+id/btnRecord"
+        android:layout_width="109dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="36dp"
+        android:onClick="captureVideo"
+        android:text="RECORD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnBrowse"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.609" />
+
+    <Button
+        android:id="@+id/btnBrowse"
+        android:layout_width="108dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="72dp"
+        android:onClick="openFileChooser"
+        android:text="BROWSE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -159,8 +189,6 @@
             tools:layout_editor_absoluteY="434dp" />
 
     </androidx.appcompat.widget.Toolbar>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
