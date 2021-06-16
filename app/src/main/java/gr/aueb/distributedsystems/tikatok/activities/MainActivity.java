@@ -23,6 +23,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.backend.Address;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     ObjectOutputStream out;
     ObjectInputStream in;
     Socket appNodeRequestSocket;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = getUsername();
-                if (username.isEmpty())
-                    showErrorMessage("Warning!", "You cannot use the app without a username!");
+                if (!isValidUsername())
+                    showErrorMessage("Warning!", "You cannot use the app without a username! Make sure it only contains English characters!");
                 else{
+                    Log.i("USERNAME", "Username set as: " + username);
                     appNode.setChannel(new Channel(username));
                     System.out.println(appNode.getChannel());
                     Thread t = new Thread(new Runnable() {
@@ -79,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean isValidUsername() {
+        username = getUsername();
+        if (username.isEmpty()) return false;
+        Pattern pt = Pattern.compile("^[a-zA-Z]+$");
+        Matcher test = pt.matcher(username); //CAST TO STRING
+        return test.matches();
     }
 
     public void goToSearch(AppNode appNode){

@@ -74,6 +74,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                    showErrorMessage("Warning!", "You must choose a video title containing only English characters!");
                }
                else{
+                   Log.i("VIDEO_TITLE", "Video Title set as: " + videoTitle);
                    ArrayList<String> hashtagsList = getHashtags();
                    System.out.println(hashtagsList);
                }
@@ -126,7 +127,6 @@ public class UploadVideoActivity extends AppCompatActivity {
 
     private boolean isValidTitle() {
         videoTitle = title.getText().toString();
-        Log.i("VIDEO_TITLE", "Video Title set as: " + videoTitle);
         if (videoTitle.isEmpty()) return false;
         Pattern pt = Pattern.compile("^[a-zA-Z]+$");
         Matcher test = pt.matcher(videoTitle); //CAST TO STRING
