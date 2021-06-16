@@ -38,7 +38,7 @@
         android:layout_width="109dp"
         android:layout_height="71dp"
         android:layout_marginEnd="36dp"
-        android:text="Record"
+        android:text="RECORD"
         android:onClick="captureVideo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnBrowse"
@@ -52,6 +52,7 @@
         android:layout_height="72dp"
         android:layout_marginEnd="72dp"
         android:text="BROWSE"
+        android:onClick="openFileChooser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

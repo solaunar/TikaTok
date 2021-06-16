@@ -2,12 +2,8 @@ package gr.aueb.distributedsystems.tikatok.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.VideoView;
+import java.net.*;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
@@ -33,7 +30,7 @@ public class UploadVideoActivity extends AppCompatActivity {
     AppNode user;
 
     private static int VIDEO_REQUEST = 101;
-    private Uri videoUri = null;
+    private Uri videoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +41,9 @@ public class UploadVideoActivity extends AppCompatActivity {
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("UploadVideoActivity user: " + user.getChannel());
 
-        findViewById(R.id.btnRecord).setOnClickListener(new View.OnClickListener() {
+        /** Record Button */
+        btnRecord = findViewById(R.id.btnRecord);
+        btnRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -86,9 +85,17 @@ public class UploadVideoActivity extends AppCompatActivity {
         });
     }
 
+    /** Video capture */
     public void captureVideo (View view){
         Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         startActivityForResult (videoIntent, VIDEO_REQUEST);
+    }
+
+    /** File Chooser */
+    public void openFileChooser(View view){
+        Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        fileIntent.setType("*/*");
+        startActivityForResult(fileIntent, VIDEO_REQUEST);
     }
 
     @Override
@@ -98,13 +105,15 @@ public class UploadVideoActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             VideoView videoView = new VideoView(this);
             videoUri = data.getData();
-            Log.i("VIDEO_RECORD", "Video recorded and available at " + videoUri);
+            Log.i("VIDEO_TB_UPLOADED", "Video available at " + videoUri.toString());
             videoView.setVideoURI(data.getData());
             videoView.start();
             builder.setView(videoView).show();
         }
     }
 
+
+    /** Toolbar */
     private void goToLogout(AppNode user) {
         Intent logoutActivityScreen = new Intent(getApplicationContext(), MainActivity.class);
         logoutActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
