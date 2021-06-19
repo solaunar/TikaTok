@@ -1,7 +1,7 @@
 package gr.aueb.distributedsystems.tikatok.backend;
 
-public class Broker3 {
+public class AppNode1 {
     public static void main(String[] args) {
-        new Broker(Node.BROKER_ADDRESSES.get(2)).init();
+        new AppNode(Node.APPNODE_ADDRESSES.get(0)).init();
     }
 }

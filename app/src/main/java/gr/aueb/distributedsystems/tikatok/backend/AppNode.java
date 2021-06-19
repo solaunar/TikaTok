@@ -1,7 +1,4 @@
-package gr.aueb.distributedsystems.tikatok.backend; /**
- * AM: 3180009-3180026-3180095-3180289
- * DISTRIBUTED SYSTEMS 2020-21
- */
+package gr.aueb.distributedsystems.tikatok.backend;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -257,7 +254,7 @@ public class AppNode extends Node {
         if (response == 1) {
             isPublisher = true;
             System.out.println("Please specify the directory that contains the mp4 and hashtags folders for your existent videos.");
-            while (this.userDirectory.equals(""))
+            while (this.userDirectory.isEmpty())
                 this.userDirectory = appNodeInput.nextLine();
             //and start a new thread to handle BROKER requests that need to pull video from this publisher
             //as well as start the AppNode server
@@ -332,4 +329,40 @@ public class AppNode extends Node {
         return ((ArrayList<Address>) hashIDAssociatedWithBrokers.keySet()).get(random.ints(0, hashIDAssociatedWithBrokers.size()).findFirst().getAsInt());
     }
 
+    public void connectToBroker(){
+        try {
+            Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+            ObjectOutputStream out;
+            ObjectInputStream in;
+            Socket appNodeRequestSocket;
+            appNodeRequestSocket = new Socket(randomBroker.getIp(), randomBroker.getPort());
+            out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
+            in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
+            out.writeObject(this);
+            out.flush();
+            ArrayList<String> tempAllHashtagsPublished = new ArrayList<>();
+            tempAllHashtagsPublished.addAll(this.getChannel().getAllHashtagsPublished());
+            out.writeObject(tempAllHashtagsPublished);
+            out.flush();
+            ArrayList<File> tempAllVideosPublished = new ArrayList<>();
+            tempAllVideosPublished.addAll(this.getChannel().getAllVideosPublished());
+            out.writeObject(tempAllVideosPublished);
+            out.flush();
+            HashMap<String, ArrayList<File>> tempUserVideosByHashtag = new HashMap<>();
+            tempUserVideosByHashtag.putAll(this.getChannel().getUserVideosByHashtag());
+            out.writeObject(tempUserVideosByHashtag);
+            out.flush();
+            boolean isPublisher = this.isPublisher();
+            out.writeBoolean(isPublisher);
+            out.flush();
+            System.out.println(in.readObject());
+            System.out.println("[Consumer]: Sending info table request to Broker.");
+            out.writeObject("INFO");
+            out.flush();
+            System.out.println(in.readObject());
+            this.setInfoTable((InfoTable) in.readObject());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

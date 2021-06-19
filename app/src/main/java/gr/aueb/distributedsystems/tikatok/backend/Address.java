@@ -1,7 +1,4 @@
-package gr.aueb.distributedsystems.tikatok.backend; /**
- * AM: 3180009-3180026-3180095-3180289
- * DISTRIBUTED SYSTEMS 2020-21
- */
+package gr.aueb.distributedsystems.tikatok.backend;
 
 import java.io.Serializable;
 

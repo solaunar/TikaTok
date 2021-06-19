@@ -203,6 +203,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == VIDEO_REQUEST) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             VideoView videoView = new VideoView(this);
+            data.getDataString();
             videoUri = data.getData();
             Log.i("VIDEO_TB_UPLOADED", "Video available at " + videoUri.toString());
             //Log.i("VIDEO_TB_UPLOADED", "Video available at path " + new File(videoUri.getPath()));

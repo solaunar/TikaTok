@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
     TextView usernameTextView;
     Button loginBtn;
     AppNode appNode;
-    ObjectOutputStream out;
-    ObjectInputStream in;
-    Socket appNodeRequestSocket;
     private String username;
 
     @Override
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Thread t = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            connectToBroker();
+                            appNode.connectToBroker();
                         }
                     });
                     t.start();
@@ -108,40 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle(title)
                 .setMessage(msg)
                 .setPositiveButton(R.string.ok, null).create().show();
-    }
-
-    public void connectToBroker(){
-        try {
-            Address randomBroker = Node.BROKER_ADDRESSES.get(0);
-            appNodeRequestSocket = new Socket(randomBroker.getIp(), randomBroker.getPort());
-            out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
-            in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
-            out.writeObject(appNode);
-            out.flush();
-            ArrayList<String> tempAllHashtagsPublished = new ArrayList<>();
-            tempAllHashtagsPublished.addAll(appNode.getChannel().getAllHashtagsPublished());
-            out.writeObject(tempAllHashtagsPublished);
-            out.flush();
-            ArrayList<File> tempAllVideosPublished = new ArrayList<>();
-            tempAllVideosPublished.addAll(appNode.getChannel().getAllVideosPublished());
-            out.writeObject(tempAllVideosPublished);
-            out.flush();
-            HashMap<String, ArrayList<File>> tempUserVideosByHashtag = new HashMap<>();
-            tempUserVideosByHashtag.putAll(appNode.getChannel().getUserVideosByHashtag());
-            out.writeObject(tempUserVideosByHashtag);
-            out.flush();
-            boolean isPublisher = appNode.isPublisher();
-            out.writeBoolean(isPublisher);
-            out.flush();
-            System.out.println(in.readObject());
-            System.out.println("[Consumer]: Sending info table request to Broker.");
-            out.writeObject("INFO");
-            out.flush();
-            System.out.println(in.readObject());
-            appNode.setInfoTable((InfoTable) in.readObject());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     private void getCameraPermission () {
