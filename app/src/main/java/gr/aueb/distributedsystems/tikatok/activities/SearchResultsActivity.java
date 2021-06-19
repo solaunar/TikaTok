@@ -20,6 +20,7 @@ import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.MyFileVide
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleFragment;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleRecyclerViewAdapter;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.StringTopicRecyclerViewAdapter;
+import gr.aueb.distributedsystems.tikatok.backend.Address;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
@@ -39,7 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
     String searchTerm;
-    boolean resultsExist;
+    Address resultsExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
         resultFragment.setAdapter(adapter);
         txtResultsForMsg = findViewById(R.id.txtResultsForMsg);
 
-        if (!resultsExist) txtResultsForMsg.setText("No results found for topic: " + searchTerm);
+        if (resultsExist==null || results.isEmpty()) txtResultsForMsg.setText("No results found for topic: " + searchTerm);
         /** Toolbar Buttons */
         btnSubs = findViewById(R.id.btnSubsAction);
         btnSubs.setOnClickListener(new View.OnClickListener() {
@@ -148,18 +149,18 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
         return results;
     }
 
-    public boolean filterVideosFromInfoTable(String searchTerm){
+    public Address filterVideosFromInfoTable(String searchTerm){
         InfoTable infoTable = user.getInfoTable();
         //System.out.println(infoTable);
         HashMap<String, ArrayList<File>> allVideosByTopic = infoTable.getAllVideosByTopic();
         ArrayList<String> availableTopics = infoTable.getAvailableTopics();
-        if (!availableTopics.contains(searchTerm)) return false;
+        if (!availableTopics.contains(searchTerm)) return user.find(searchTerm);
         ArrayList<File> userVideos = infoTable.getAllVideosByTopic().get(user.getChannel().getChannelName());
         ArrayList<File> videosAssociated = allVideosByTopic.get(searchTerm);
         for (File video : videosAssociated)
             if (!userVideos.contains(video))
                 results.add(video);
 
-        return true;
+        return user.find(searchTerm);
     }
 }

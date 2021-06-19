@@ -24,11 +24,13 @@ import java.io.File;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
+import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
 public class UploadVideoActivity extends AppCompatActivity {
 
@@ -76,6 +78,20 @@ public class UploadVideoActivity extends AppCompatActivity {
                else{
                    Log.i("VIDEO_TITLE", "Video Title set as: " + videoTitle);
                    ArrayList<String> hashtagsList = getHashtags();
+                   String formattedDirectory = videoUri.getPath() + "$" + videoTitle + "$" + user.getChannel().getChannelName();
+                   Log.i("VIDEO_PATH", "Video path set as: " + formattedDirectory);
+                   user.uploadVideo(formattedDirectory, hashtagsList);
+                   if(!user.isPublisher()){
+                       user.setPublisher(true);
+                       Thread t = new Thread(new Runnable() {
+                           @Override
+                           public void run() {
+                               user.connectToBroker();
+                           }
+                       });
+                       t.start();
+                       openAppNodeServer();
+                   }
                    System.out.println(hashtagsList);
                }
             }
@@ -241,4 +257,13 @@ public class UploadVideoActivity extends AppCompatActivity {
         startActivity(SubsActivityScreen);
     }
 
+    private void openAppNodeServer(){
+        Thread appNodeServer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user.openAppNodeServer();
+            }
+        });
+        appNodeServer.start();
+    }
 }
