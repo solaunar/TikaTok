@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +59,8 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
 //            }
 //        }
         System.out.println("SearchActivity user: " + user.getChannel());
+        SearchActivity.GetInfoTableTask getInfoTableTask = new SearchActivity.GetInfoTableTask();
+        getInfoTableTask.execute("CONNECT_TO_BROKER");
         setContentView(R.layout.activity_search);
 
         topicFragment = findViewById(R.id.fragmentAvailable);
@@ -106,10 +109,28 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
                 if (searchTerm.getText().toString().isEmpty())
                     showErrorMessage("Warning!", "Search field must not be empty!");
                 else{
-                    goToResult(user);
+                    SearchActivity.GetInfoTableTask getInfoTableTask = new SearchActivity.GetInfoTableTask();
+                    getInfoTableTask.execute("CONNECT_TO_BROKER");
+                    goToResult(user, searchTerm.getText().toString());
                 }
             }
         });
+    }
+
+    private class GetInfoTableTask extends AsyncTask<String, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(String... strings) {
+            if(strings[0].equals("CONNECT_TO_BROKER"))
+                return user.connectToBroker();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(AppNode appNode) {
+            super.onPostExecute(user);
+            user = appNode;
+        }
     }
 
     private void goToLogout(AppNode user) {
@@ -144,9 +165,10 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
                 .setPositiveButton(R.string.ok, null).create().show();
     }
 
-    public void goToResult(AppNode appNode){
+    public void goToResult(AppNode appNode, String searchTerm){
         Intent resultActivityScreen = new Intent(getApplicationContext(), SearchResultsActivity.class);
         resultActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, appNode);
+        resultActivityScreen.putExtra(SearchResultsActivity.SEARCH_TERM, searchTerm);
         startActivity(resultActivityScreen);
     }
 

@@ -374,4 +374,24 @@ public class AppNode extends Node {
             return null;
         }
     }
+
+    /**
+     * method find iterates through the infotable data structure to check if topic exists and returns an Address obj
+     * @param topic String topic that user asked to search or subscribe to
+     * @return Address obj if the topic does exist it will be one of the broker addresses, if not then null is returned
+     */
+    public Address find(String topic) {
+        HashMap<Address, ArrayList<String>> topicsAssociatedWithBrokers = this.getInfoTable().getTopicsAssociatedWithBrokers();
+        Iterator it = topicsAssociatedWithBrokers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            ArrayList<String> brokerTopics = (ArrayList<String>) pair.getValue();
+            for (String topicRegistered : brokerTopics) {
+                if (topicRegistered.equals(topic)) {
+                    return (Address) pair.getKey();
+                }
+            }
+        }
+        return null;
+    }
 }

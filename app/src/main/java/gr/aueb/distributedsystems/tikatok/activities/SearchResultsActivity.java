@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import gr.aueb.distributedsystems.tikatok.R;
@@ -19,9 +21,11 @@ import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.Fil
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleRecyclerViewAdapter;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.StringTopicRecyclerViewAdapter;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
+import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
 public class SearchResultsActivity extends AppCompatActivity implements FileVideoTitleFragment.OnFragmentInteractionListener{
-    List <File> results;
+    public static final String SEARCH_TERM = "search_term";
+    List <File> results = new ArrayList<>();
     RecyclerView resultFragment;
 
     /**Toolbar Buttons*/
@@ -30,23 +34,30 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
     Button btnUpload;
     ImageButton btnHome;
     ImageButton btnLogout;
+    TextView txtResultsForMsg;
 
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
+    String searchTerm;
+    boolean resultsExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = getIntent();
+        user = (AppNode) i.getSerializableExtra(APPNODE_USER);
+        searchTerm = i.getStringExtra(SEARCH_TERM);
+        System.out.println("SearchResultsActivity user: " + user.getChannel());
+
         setContentView(R.layout.activity_search_results);
 
         resultFragment = findViewById(R.id.fragmentSearchResults);
         FileVideoTitleRecyclerViewAdapter adapter = new FileVideoTitleRecyclerViewAdapter(getVideos(), this);
         resultFragment.setAdapter(adapter);
+        txtResultsForMsg = findViewById(R.id.txtResultsForMsg);
 
-        Intent i = getIntent();
-        user = (AppNode) i.getSerializableExtra(APPNODE_USER);
-        System.out.println("SearchResultsActivity user: " + user.getChannel());
-
+        if (!resultsExist) txtResultsForMsg.setText("No results found for topic: " + searchTerm);
         /** Toolbar Buttons */
         btnSubs = findViewById(R.id.btnSubsAction);
         btnSubs.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +144,22 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
 
     @Override
     public List<File> getVideos() {
-        results = new ArrayList<>();
-        results.add(new File("\\peepee.mp4"));
-        results.add(new File("\\poopoo.mp4"));
+        resultsExist = filterVideosFromInfoTable(searchTerm);
         return results;
+    }
+
+    public boolean filterVideosFromInfoTable(String searchTerm){
+        InfoTable infoTable = user.getInfoTable();
+        //System.out.println(infoTable);
+        HashMap<String, ArrayList<File>> allVideosByTopic = infoTable.getAllVideosByTopic();
+        ArrayList<String> availableTopics = infoTable.getAvailableTopics();
+        if (!availableTopics.contains(searchTerm)) return false;
+        ArrayList<File> userVideos = infoTable.getAllVideosByTopic().get(user.getChannel().getChannelName());
+        ArrayList<File> videosAssociated = allVideosByTopic.get(searchTerm);
+        for (File video : videosAssociated)
+            if (!userVideos.contains(video))
+                results.add(video);
+
+        return true;
     }
 }
