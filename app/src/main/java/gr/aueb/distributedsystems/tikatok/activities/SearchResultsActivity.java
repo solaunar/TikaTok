@@ -26,7 +26,7 @@ import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
 public class SearchResultsActivity extends AppCompatActivity implements FileVideoTitleFragment.OnFragmentInteractionListener{
     public static final String SEARCH_TERM = "search_term";
-    List <File> results = new ArrayList<>();
+    List <File> results;
     RecyclerView resultFragment;
 
     /**Toolbar Buttons*/
@@ -145,6 +145,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
 
     @Override
     public List<File> getVideos() {
+        results = new ArrayList<>();
         resultsExist = filterVideosFromInfoTable(searchTerm);
         return results;
     }
@@ -157,9 +158,14 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
         if (!availableTopics.contains(searchTerm)) return user.find(searchTerm);
         ArrayList<File> userVideos = infoTable.getAllVideosByTopic().get(user.getChannel().getChannelName());
         ArrayList<File> videosAssociated = allVideosByTopic.get(searchTerm);
+        if (videosAssociated==null) return null;
         for (File video : videosAssociated)
-            if (!userVideos.contains(video))
+            if(userVideos== null)
                 results.add(video);
+            else {
+                if (!userVideos.contains(video))
+                    results.add(video);
+            }
 
         return user.find(searchTerm);
     }

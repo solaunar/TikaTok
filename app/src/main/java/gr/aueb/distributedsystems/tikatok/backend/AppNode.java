@@ -143,7 +143,6 @@ public class AppNode extends Node {
     public void updateOnDelete(File toBeDeleted){
         try {
             if (this.isPublisher()) {
-                deleteVideo(toBeDeleted);
                 Address randomBroker = Node.BROKER_ADDRESSES.get(0);
                 ObjectOutputStream out;
                 ObjectInputStream in;

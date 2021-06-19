@@ -27,7 +27,7 @@ import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
 public class SearchActivity extends AppCompatActivity implements StringTopicFragment.OnFragmentInteractionListener{
     public static final String THREAD_ID = "connection_thread_id";
-    List <String> topics = new ArrayList<>();
+    List <String> topics;
     RecyclerView topicFragment;
     TextView searchTerm;
     Button btnSearch;
@@ -186,6 +186,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
 
     @Override
     public List<String> getTopics() {
+        topics = new ArrayList<>();
         filterTopicsFromInfoTable();
         return topics;
     }
@@ -198,9 +199,14 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
         ArrayList<File> userVideos = infoTable.getAllVideosByTopic().get(user.getChannel().getChannelName());
         for (String topic : availableTopics) {
             ArrayList<File> videosAssociated = allVideosByTopic.get(topic);
+            if (videosAssociated == null) continue;
             for (File video : videosAssociated)
-                if (!userVideos.contains(video))
+                if(userVideos== null)
                     topics.add(topic);
+                else {
+                    if (!userVideos.contains(video))
+                        topics.add(topic);
+                }
         }
     }
 }

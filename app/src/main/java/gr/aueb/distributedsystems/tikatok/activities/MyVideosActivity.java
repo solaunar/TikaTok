@@ -20,7 +20,7 @@ import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.MyFileVide
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 
 public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTitleFragment.OnFragmentInteractionListener {
-    List<File> videos = new ArrayList<>();
+    List<File> videos;
     RecyclerView videoFragment;
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
@@ -40,7 +40,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("MyVideosActivity user: " + user.getChannel());
-        setVideos();
+        //setVideos();
 
         setContentView(R.layout.activity_my_videos);
         videoFragment = findViewById(R.id.fragmentMyVideos);
@@ -109,7 +109,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
 
     @Override
     public void onDelete(File video) {
-        videos.remove(video);
+        user.deleteVideo(video);
         if(videoFragment!=null)
             videoFragment.getAdapter().notifyDataSetChanged();
         Thread t = new Thread(new Runnable() {
@@ -123,6 +123,8 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
 
     @Override
     public List<File> getVideos() {
+        videos = new ArrayList<>();
+        setVideos();
         return videos;
     }
 
