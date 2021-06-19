@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -67,18 +68,37 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     Log.i("USERNAME", "Username set as: " + username);
                     appNode.setChannel(new Channel(username));
-                    System.out.println(appNode.getChannel());
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            appNode.connectToBroker();
-                        }
-                    });
-                    t.start();
+//                    System.out.println(appNode.getChannel());
+//                    Thread t = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            appNode.connectToBroker();
+//                        }
+//                    });
+//                    t.start();
+//                    long tID = t.getId();
+                    GetInfoTableTask getInfoTableTask = new GetInfoTableTask();
+                    getInfoTableTask.execute("CONNECT_TO_BROKER");
                     goToSearch(appNode);
                 }
             }
         });
+    }
+
+    private class GetInfoTableTask extends AsyncTask<String, String, AppNode>{
+
+        @Override
+        protected AppNode doInBackground(String... strings) {
+            if(strings[0].equals("CONNECT_TO_BROKER"))
+                return appNode.connectToBroker();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(AppNode user) {
+            super.onPostExecute(user);
+            appNode = user;
+        }
     }
 
     private boolean isValidUsername() {
@@ -92,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     public void goToSearch(AppNode appNode){
         Intent searchActivityScreen = new Intent(getApplicationContext(), SearchActivity.class);
         searchActivityScreen.putExtra(SearchActivity.APPNODE_USER, appNode);
+//        searchActivityScreen.putExtra(SearchActivity.THREAD_ID, tID);
         startActivity(searchActivityScreen);
     }
 

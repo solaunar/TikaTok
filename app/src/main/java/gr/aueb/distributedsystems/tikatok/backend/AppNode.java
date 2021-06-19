@@ -26,7 +26,7 @@ public class AppNode extends Node {
     transient Socket connection = null;
     private boolean isPublisher = false;
     private boolean isSubscribed = false;
-    private InfoTable infoTable;
+    private static InfoTable infoTable;
     private HashMap<String, ArrayList<File>> subscribedTopics = new HashMap<>();
 
     public AppNode(Address address) {
@@ -329,7 +329,7 @@ public class AppNode extends Node {
         return ((ArrayList<Address>) hashIDAssociatedWithBrokers.keySet()).get(random.ints(0, hashIDAssociatedWithBrokers.size()).findFirst().getAsInt());
     }
 
-    public void connectToBroker(){
+    public AppNode connectToBroker(){
         try {
             Address randomBroker = Node.BROKER_ADDRESSES.get(0);
             ObjectOutputStream out;
@@ -361,8 +361,17 @@ public class AppNode extends Node {
             out.flush();
             System.out.println(in.readObject());
             this.setInfoTable((InfoTable) in.readObject());
+            //System.out.println(getInfoTable());
+            out.writeObject("EXIT");
+            out.flush();
+            System.out.println("[Broker]: " + in.readObject());
+            in.close();
+            out.close();
+            appNodeRequestSocket.close();
+            return this;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }

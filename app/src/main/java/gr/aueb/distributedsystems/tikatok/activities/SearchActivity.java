@@ -11,17 +11,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.StringTopicFragment;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.StringTopicRecyclerViewAdapter;
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 import gr.aueb.distributedsystems.tikatok.backend.Channel;
+import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
 public class SearchActivity extends AppCompatActivity implements StringTopicFragment.OnFragmentInteractionListener{
-    List <String> topics;
+    public static final String THREAD_ID = "connection_thread_id";
+    List <String> topics = new ArrayList<>();
     RecyclerView topicFragment;
     TextView searchTerm;
     Button btnSearch;
@@ -38,15 +43,27 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Intent i = getIntent();
+        user = (AppNode) i.getSerializableExtra(APPNODE_USER);
+//        long tID = i.getLongExtra(THREAD_ID, 0);
+//        //Give you set of Threads
+//        Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
+//
+//        //Iterate over set to find yours
+//        for(Thread thread : setOfThread){
+//            if(thread.getId()==tID){
+//                thread.interrupt();
+//            }
+//        }
+        System.out.println("SearchActivity user: " + user.getChannel());
         setContentView(R.layout.activity_search);
 
         topicFragment = findViewById(R.id.fragmentAvailable);
         StringTopicRecyclerViewAdapter adapter = new StringTopicRecyclerViewAdapter(getTopics(), this);
         topicFragment.setAdapter(adapter);
 
-        Intent i = getIntent();
-        user = (AppNode) i.getSerializableExtra(APPNODE_USER);
-        System.out.println("SearchActivity user: " + user.getChannel());
 
         /** Toolbar Buttons */
         btnSubs = findViewById(R.id.btnSubsAction);
@@ -143,14 +160,25 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
         Intent resultActivityScreen = new Intent(getApplicationContext(), SearchResultsActivity.class);
         resultActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
         startActivity(resultActivityScreen);
-
     }
 
     @Override
     public List<String> getTopics() {
-        topics = new ArrayList<>();
-        topics.add("peepee");
-        topics.add("poopoo");
+        filterTopicsFromInfoTable();
         return topics;
+    }
+
+    public void filterTopicsFromInfoTable(){
+        InfoTable infoTable = user.getInfoTable();
+        //System.out.println(infoTable);
+        HashMap<String, ArrayList<File>> allVideosByTopic = infoTable.getAllVideosByTopic();
+        ArrayList<String> availableTopics = infoTable.getAvailableTopics();
+        ArrayList<File> userVideos = infoTable.getAllVideosByTopic().get(user.getChannel().getChannelName());
+        for (String topic : availableTopics) {
+            ArrayList<File> videosAssociated = allVideosByTopic.get(topic);
+            for (File video : videosAssociated)
+                if (!userVideos.contains(video))
+                    topics.add(topic);
+        }
     }
 }
