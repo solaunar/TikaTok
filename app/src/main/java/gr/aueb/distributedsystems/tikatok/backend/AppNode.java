@@ -4,6 +4,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -137,6 +138,50 @@ public class AppNode extends Node {
         }
         getChannel().getAllHashtagsPublished().clear();
         getChannel().getAllHashtagsPublished().addAll(userVideosByHashtag.keySet());
+    }
+
+    public void updateOnDelete(File toBeDeleted){
+        try {
+            if (this.isPublisher()) {
+                deleteVideo(toBeDeleted);
+                Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+                ObjectOutputStream out;
+                ObjectInputStream in;
+                Socket appNodeRequestSocket;
+                appNodeRequestSocket = new Socket(randomBroker.getIp(), randomBroker.getPort());
+                out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
+                in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
+                out.writeObject("DELETE");
+                out.flush();
+                System.out.println("[Publisher]: Notifying brokers of updated content.");
+                out.writeObject(this);
+                out.flush();
+                out.writeObject(toBeDeleted);
+                out.flush();
+                ArrayList<String> tempAllHashtagsPublished = new ArrayList<>();
+                tempAllHashtagsPublished.addAll(this.getChannel().getAllHashtagsPublished());
+                out.writeObject(tempAllHashtagsPublished);
+                out.flush();
+                System.out.println(in.readObject());
+                System.out.println("[Consumer]: Sending info table request to Broker.");
+                out.writeObject("INFO");
+                out.flush();
+                in.readObject();
+                this.setInfoTable((InfoTable) in.readObject());
+                out.writeObject("EXIT");
+                out.flush();
+                System.out.println("[Broker]: " + in.readObject());
+                in.close();
+                out.close();
+                appNodeRequestSocket.close();
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

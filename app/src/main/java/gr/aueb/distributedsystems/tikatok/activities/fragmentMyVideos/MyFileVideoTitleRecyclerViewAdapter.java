@@ -35,7 +35,7 @@ public class MyFileVideoTitleRecyclerViewAdapter extends RecyclerView.Adapter<My
         final File video = mValues.get(position);
         holder.mItem = video;
         String videoTitle = video.getPath();
-        videoTitle = videoTitle.substring(videoTitle.lastIndexOf('\\') + 1, videoTitle.indexOf(".mp4"));
+        videoTitle = videoTitle.substring(videoTitle.indexOf("$") + 1, videoTitle.lastIndexOf("$") );
         holder.txtMyFileVideoTitle.setText(videoTitle);
         holder.imageButtonDeleteVideo.setOnClickListener(new View.OnClickListener() {
             @Override

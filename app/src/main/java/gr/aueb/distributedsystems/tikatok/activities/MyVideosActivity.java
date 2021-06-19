@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import gr.aueb.distributedsystems.tikatok.activities.fragmentMyVideos.MyFileVide
 import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 
 public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTitleFragment.OnFragmentInteractionListener {
-    List<File> videos;
+    List<File> videos = new ArrayList<>();
     RecyclerView videoFragment;
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
@@ -29,21 +30,25 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
     Button btnUpload;
     ImageButton btnHome;
     ImageButton btnLogout;
+    TextView textViewMyVideos;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_videos);
-
-        videoFragment = findViewById(R.id.fragmentMyVideos);
-        MyFileVideoTitleRecyclerViewAdapter adapter = new MyFileVideoTitleRecyclerViewAdapter(getVideos(), this);
-        videoFragment.setAdapter(adapter);
 
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("MyVideosActivity user: " + user.getChannel());
+        setVideos();
 
+        setContentView(R.layout.activity_my_videos);
+        videoFragment = findViewById(R.id.fragmentMyVideos);
+        MyFileVideoTitleRecyclerViewAdapter adapter = new MyFileVideoTitleRecyclerViewAdapter(getVideos(), this);
+        videoFragment.setAdapter(adapter);
+        textViewMyVideos = findViewById(R.id.textViewMyVideos);
+
+        if(videos.isEmpty()) textViewMyVideos.setText("You have not uploaded any videos.");
         /** Toolbar Buttons */
         btnSubs = findViewById(R.id.btnSubsAction);
         btnSubs.setOnClickListener(new View.OnClickListener() {
@@ -107,14 +112,21 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
         videos.remove(video);
         if(videoFragment!=null)
             videoFragment.getAdapter().notifyDataSetChanged();
-        System.out.println(videos);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user.updateOnDelete(video);
+            }
+        });
+        t.start();
     }
 
     @Override
     public List<File> getVideos() {
-        videos = new ArrayList<>();
-        videos.add(new File("\\peepee.mp4"));
-        videos.add(new File("\\poopoo.mp4"));
         return videos;
+    }
+
+    private void setVideos(){
+        videos = user.getChannel().getAllVideosPublished();
     }
 }
