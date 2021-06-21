@@ -140,7 +140,7 @@ public class AppNode extends Node {
         getChannel().getAllHashtagsPublished().addAll(userVideosByHashtag.keySet());
     }
 
-    public void updateOnDelete(File toBeDeleted){
+    public AppNode updateOnDelete(File toBeDeleted){
         try {
             if (this.isPublisher()) {
                 Address randomBroker = Node.BROKER_ADDRESSES.get(0);
@@ -173,6 +173,7 @@ public class AppNode extends Node {
                 in.close();
                 out.close();
                 appNodeRequestSocket.close();
+                return this;
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -181,6 +182,7 @@ public class AppNode extends Node {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +51,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
 
         if(videos.isEmpty()) textViewMyVideos.setText("You have not uploaded any videos.");
         /** Toolbar Buttons */
-        btnSubs = findViewById(R.id.btnSubsAction);
+        btnSubs = findViewById(R.id.btnSubsActionMyVideos);
         btnSubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +59,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
             }
         });
 
-        btnHome = findViewById(R.id.btnLogin);
+        btnHome = findViewById(R.id.btnLoginMyVideos);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +67,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
             }
         });
 
-        btnUpload = findViewById(R.id.btnUploadAction);
+        btnUpload = findViewById(R.id.btnUploadActionMyVideos);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
             }
         });
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogoutMyVideos);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,23 +113,40 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
         user.deleteVideo(video);
         if(videoFragment!=null)
             videoFragment.getAdapter().notifyDataSetChanged();
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                user.updateOnDelete(video);
-            }
-        });
-        t.start();
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                user.updateOnDelete(video);
+//            }
+//        });
+//        t.start();
+        UpdateInfoTableTask updateInfoTableTask = new UpdateInfoTableTask();
+        updateInfoTableTask.execute(video);
     }
 
     @Override
     public List<File> getVideos() {
         videos = new ArrayList<>();
         setVideos();
+        System.out.println(videos);
         return videos;
     }
 
     private void setVideos(){
         videos = user.getChannel().getAllVideosPublished();
+    }
+
+    private class UpdateInfoTableTask extends AsyncTask<File, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(File... videos) {
+            return user.updateOnDelete(videos[0]);
+        }
+
+        @Override
+        protected void onPostExecute(AppNode appNode) {
+            super.onPostExecute(user);
+            user = appNode;
+        }
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".activities.MyVideosActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarMyVideos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <ImageButton
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnLoginMyVideos"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="7dp"
@@ -42,7 +42,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <Button
-            android:id="@+id/btnUploadAction"
+            android:id="@+id/btnUploadActionMyVideos"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Upload"
@@ -52,7 +52,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <Button
-            android:id="@+id/btnSubsAction"
+            android:id="@+id/btnSubsActionMyVideos"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Subs"
@@ -62,7 +62,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <ImageButton
-            android:id="@+id/btnLogout"
+            android:id="@+id/btnLogoutMyVideos"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
