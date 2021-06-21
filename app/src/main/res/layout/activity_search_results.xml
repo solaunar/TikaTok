@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.199" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarSearchResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <ImageButton
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnLoginSearchResults"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="7dp"
@@ -41,7 +41,7 @@
             tools:layout_editor_absoluteY="577dp" />
 
         <Button
-            android:id="@+id/btnMyVideosAction"
+            android:id="@+id/btnMyVideosActionSearchResults"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="My Videos"
@@ -51,7 +51,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <Button
-            android:id="@+id/btnUploadAction"
+            android:id="@+id/btnUploadActionSearchResults"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Upload"
@@ -61,7 +61,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <Button
-            android:id="@+id/btnSubsAction"
+            android:id="@+id/btnSubsActionSearchResults"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Subs"
@@ -71,7 +71,7 @@
             tools:layout_editor_absoluteY="667dp" />
 
         <ImageButton
-            android:id="@+id/btnLogout"
+            android:id="@+id/btnLogoutSearchResults"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"

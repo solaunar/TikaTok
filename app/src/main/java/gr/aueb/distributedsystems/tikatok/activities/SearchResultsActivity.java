@@ -60,7 +60,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
 
         if (resultsExist==null || results.isEmpty()) txtResultsForMsg.setText("No results found for topic: " + searchTerm);
         /** Toolbar Buttons */
-        btnSubs = findViewById(R.id.btnSubsAction);
+        btnSubs = findViewById(R.id.btnSubsActionSearchResults);
         btnSubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
             }
         });
 
-        btnMyVids = findViewById(R.id.btnMyVideosAction);
+        btnMyVids = findViewById(R.id.btnMyVideosActionSearchResults);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
             }
         });
 
-        btnUpload = findViewById(R.id.btnUploadAction);
+        btnUpload = findViewById(R.id.btnUploadActionSearchResults);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +84,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
             }
         });
 
-        btnHome = findViewById(R.id.btnLogin);
+        btnHome = findViewById(R.id.btnLoginSearchResults);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
             }
         });
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogoutSearchResults);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
