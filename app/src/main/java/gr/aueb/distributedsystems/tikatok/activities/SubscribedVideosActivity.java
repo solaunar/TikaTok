@@ -46,7 +46,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
 
         /** Toolbar Buttons */
 
-        btnMyVids = findViewById(R.id.btnMyVideosAction);
+        btnMyVids = findViewById(R.id.btnMyVideosActionSubscribedVideos);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +54,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
-        btnUpload = findViewById(R.id.btnUploadAction);
+        btnUpload = findViewById(R.id.btnUploadActionSubscribedVideos);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +62,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
-        btnHome = findViewById(R.id.btnLogin);
+        btnHome = findViewById(R.id.btnLoginSubscribedVideos);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +70,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogoutSubscribedVideos);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
