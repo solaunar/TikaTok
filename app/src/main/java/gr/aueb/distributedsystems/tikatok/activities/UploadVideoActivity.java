@@ -108,7 +108,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         });
 
         /** Toolbar Buttons */
-        btnSubs = findViewById(R.id.btnSubsAction);
+        btnSubs = findViewById(R.id.btnSubsActionUploadVideo);
         btnSubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +116,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             }
         });
 
-        btnMyVids = findViewById(R.id.btnMyVideosAction);
+        btnMyVids = findViewById(R.id.btnMyVideosActionUploadVideo);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +124,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             }
         });
 
-        btnHome = findViewById(R.id.btnLogin);
+        btnHome = findViewById(R.id.btnLoginUploadVideo);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +132,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             }
         });
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogoutUploadVideo);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
