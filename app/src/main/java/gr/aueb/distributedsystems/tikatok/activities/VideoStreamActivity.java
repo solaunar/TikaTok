@@ -33,7 +33,7 @@ public class VideoStreamActivity extends AppCompatActivity {
         System.out.println("VideoStreamActivity user: " + user.getChannel());
 
         /** Toolbar Buttons */
-        btnSubs = findViewById(R.id.btnSubsAction);
+        btnSubs = findViewById(R.id.btnSubsActionVideoStream);
         btnSubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class VideoStreamActivity extends AppCompatActivity {
             }
         });
 
-        btnMyVids = findViewById(R.id.btnMyVideosAction);
+        btnMyVids = findViewById(R.id.btnMyVideosActionVideoStream);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +49,7 @@ public class VideoStreamActivity extends AppCompatActivity {
             }
         });
 
-        btnUpload = findViewById(R.id.btnUploadAction);
+        btnUpload = findViewById(R.id.btnUploadActionVideoStream);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class VideoStreamActivity extends AppCompatActivity {
             }
         });
 
-        btnHome = findViewById(R.id.btnLogin);
+        btnHome = findViewById(R.id.btnLoginVideoStream);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,7 @@ public class VideoStreamActivity extends AppCompatActivity {
             }
         });
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogoutVideoStream);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
