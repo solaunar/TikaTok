@@ -100,6 +100,7 @@ public class AppNode extends Node {
             return;
         }
         HashMap<String, ArrayList<File>> userVideosByHashtag = getChannel().getUserVideosByHashtag();
+        if (hashtags == null) hashtags = new ArrayList<>();
         for (String hashtag : hashtags) {
             if (!getChannel().getAllHashtagsPublished().contains(hashtag)) {
                 getChannel().getAllHashtagsPublished().add(hashtag);

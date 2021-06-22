@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import gr.aueb.distributedsystems.tikatok.R;
 import gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleFragment;
@@ -34,16 +36,16 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscribed_videos);
-
-        subbedFragment = findViewById(R.id.fragmentSubscribedVideos);
-        FileVideoTitleRecyclerViewAdapter adapter = new FileVideoTitleRecyclerViewAdapter(getVideos(), this);
-        subbedFragment.setAdapter(adapter);
 
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
         System.out.println("SubscribedVideosActivity user: " + user.getChannel());
 
+        setContentView(R.layout.activity_subscribed_videos);
+
+        subbedFragment = findViewById(R.id.fragmentSubscribedVideos);
+        FileVideoTitleRecyclerViewAdapter adapter = new FileVideoTitleRecyclerViewAdapter(getVideos(), this);
+        subbedFragment.setAdapter(adapter);
         /** Toolbar Buttons */
 
         btnMyVids = findViewById(R.id.btnMyVideosActionSubscribedVideos);
@@ -119,8 +121,10 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
     @Override
     public List<File> getVideos() {
         subbed_videos = new ArrayList<>();
-        subbed_videos.add(new File("\\peepee.mp4"));
-        subbed_videos.add(new File("\\poopoo.mp4"));
+        HashMap<String, ArrayList<File>> subscribedTopics = user.getSubscribedTopics();
+        Set<String> topics = subscribedTopics.keySet();
+        for (String topic : topics)
+            subbed_videos.addAll(subscribedTopics.get(topic));
         return subbed_videos;
     }
 }
