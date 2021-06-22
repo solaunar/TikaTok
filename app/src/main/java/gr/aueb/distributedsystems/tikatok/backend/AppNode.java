@@ -189,6 +189,48 @@ public class AppNode extends Node {
         return null;
     }
 
+    public AppNode updateInfoTableOnSubscribe(String topic){
+        if (this.getSubscribedTopics().containsKey(topic)) return null;
+        try {
+                Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+                ObjectOutputStream out;
+                ObjectInputStream in;
+                Socket appNodeRequestSocket;
+                appNodeRequestSocket = new Socket(randomBroker.getIp(), randomBroker.getPort());
+                out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
+                in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
+                out.writeObject("REG");
+                out.flush();
+                out.writeObject(this);
+                out.flush();
+                out.writeObject(topic);
+                out.flush();
+                ArrayList<File> subscribedVideos = new ArrayList<>(this.getInfoTable().getAllVideosByTopic().get(topic));
+                if (this.getChannel().getAllHashtagsPublished().contains(topic))
+                    subscribedVideos.removeAll(this.getChannel().getUserVideosByHashtag().get(topic));
+                this.getSubscribedTopics().put(topic, subscribedVideos);
+                this.setSubscribed(true);
+                out.writeObject("INFO");
+                out.flush();
+                in.readObject();
+                this.setInfoTable((InfoTable) in.readObject());
+                out.writeObject("EXIT");
+                out.flush();
+                System.out.println("[Broker]: " + in.readObject());
+                in.close();
+                out.close();
+                appNodeRequestSocket.close();
+                return this;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * method updateOnSubscriptions checks for any changes of the available videos related to
      *                              the subscribed topics, and if changes exist it returns the

@@ -25,6 +25,8 @@ import gr.aueb.distributedsystems.tikatok.backend.AppNode;
 import gr.aueb.distributedsystems.tikatok.backend.Channel;
 import gr.aueb.distributedsystems.tikatok.backend.InfoTable;
 
+import static java.lang.Thread.sleep;
+
 public class SearchActivity extends AppCompatActivity implements StringTopicFragment.OnFragmentInteractionListener{
     public static final String THREAD_ID = "connection_thread_id";
     List <String> topics;
@@ -129,7 +131,23 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
         @Override
         protected void onPostExecute(AppNode appNode) {
             super.onPostExecute(user);
-            user = appNode;
+            if(appNode != null)
+                user = appNode;
+        }
+    }
+
+    private class SubscribeTask extends AsyncTask<String, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(String... strings) {
+            return user.updateInfoTableOnSubscribe(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(AppNode appNode) {
+            super.onPostExecute(user);
+            if(appNode != null)
+                user = appNode;
         }
     }
 
@@ -174,7 +192,40 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
 
     @Override
     public void onSubscribe(String topic) {
+        SubscribeTask subscribeTask = new SubscribeTask();
+        subscribeTask.execute(topic);
+        if (!user.isSubscribed()){
+            Thread updateSub = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (true){
+                            user.connectToBroker();
+                            //get the topics in which there has been an update
+                            ArrayList<String> topicsUpdated = user.updateOnSubscriptions();
+                            if (!topicsUpdated.isEmpty()) {
+                                //if there are indeed topics with updated content then for each one
+                                //print the list of videos
+                                HashMap<String, ArrayList<File>> updatedSubscriptions = user.getSubscribedTopics();
+                                System.out.println("Saving the list of videos of topics you are subscribed to...");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showErrorMessage("Subscriptions", "New videos!");
+                                    }
+                                });
+                            }
 
+                            sleep(3000);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            updateSub.start();
+            user.setSubscribed(true);
+        }
     }
 
     @Override
