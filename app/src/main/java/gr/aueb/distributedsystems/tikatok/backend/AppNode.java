@@ -138,6 +138,10 @@ public class AppNode extends Node {
         }
         getChannel().getAllHashtagsPublished().clear();
         getChannel().getAllHashtagsPublished().addAll(userVideosByHashtag.keySet());
+//        System.out.println(getChannel().getAllHashtagsPublished());
+//        System.out.println(getChannel().getAllVideosPublished());
+//        System.out.println(getChannel().getUserHashtagsPerVideo());
+//        System.out.println(getChannel().getUserVideosByHashtag());
     }
 
     public AppNode updateOnDelete(File toBeDeleted){

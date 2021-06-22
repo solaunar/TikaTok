@@ -179,9 +179,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
 
     @Override
     public void onView(String topic) {
-        Intent resultActivityScreen = new Intent(getApplicationContext(), SearchResultsActivity.class);
-        resultActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
-        startActivity(resultActivityScreen);
+        goToResult(user, topic);
     }
 
     @Override

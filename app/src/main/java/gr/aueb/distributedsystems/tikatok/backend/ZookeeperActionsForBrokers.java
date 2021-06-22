@@ -100,6 +100,9 @@ public class ZookeeperActionsForBrokers extends Thread {
         }
         System.out.println("[Zookeeper]: Updated InfoTable.");
         System.out.println(zookeeper.getInfoTable());
+        System.out.println(zookeeper.getInfoTable().getAllVideosByTopic());
+        System.out.println(zookeeper.getInfoTable().getAvailablePublishers());
+        System.out.println(zookeeper.getInfoTable().getAvailableTopics());
         out.writeObject(zookeeper.getInfoTable());
         out.flush();
         out.writeObject("[Zookeeper]: Sent updated info table.");
@@ -136,7 +139,7 @@ public class ZookeeperActionsForBrokers extends Thread {
         HashMap<AppNode, ArrayList<String>> allAvailablePublishers = zookeeper.getInfoTable().getAvailablePublishers();
         out.writeObject("[Zookeeper]: Updating info table...");
         out.flush();
-        if (appNode != null && isPublisher) {
+        if (appNode != null && isPublisher && !appNode.getChannel().getAllVideosPublished().isEmpty()) {
             allHashtagsPublished.add(appNode.getChannel().getChannelName());
             AppNode existsAppNode = checkPublisherExistence(appNode);
             if ( existsAppNode == null && allAvailablePublishers != null) {
@@ -183,6 +186,9 @@ public class ZookeeperActionsForBrokers extends Thread {
         }
         System.out.println("[Zookeeper]: Updated InfoTable.");
         System.out.println(zookeeper.getInfoTable());
+        System.out.println(zookeeper.getInfoTable().getAllVideosByTopic());
+        System.out.println(zookeeper.getInfoTable().getAvailablePublishers());
+        System.out.println(zookeeper.getInfoTable().getAvailableTopics());
         out.writeObject(zookeeper.getInfoTable());
         out.flush();
         out.writeObject("[Zookeeper]: Sent updated info table.");

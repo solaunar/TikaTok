@@ -113,15 +113,15 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
         user.deleteVideo(video);
         if(videoFragment!=null)
             videoFragment.getAdapter().notifyDataSetChanged();
-//        Thread t = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                user.updateOnDelete(video);
-//            }
-//        });
-//        t.start();
-        UpdateInfoTableTask updateInfoTableTask = new UpdateInfoTableTask();
-        updateInfoTableTask.execute(video);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user.updateOnDelete(video);
+            }
+        });
+        t.start();
+//        UpdateInfoTableTask updateInfoTableTask = new UpdateInfoTableTask();
+//        updateInfoTableTask.execute(video);
     }
 
     @Override
