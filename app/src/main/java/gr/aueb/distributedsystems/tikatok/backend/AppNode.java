@@ -96,7 +96,7 @@ public class AppNode extends Node {
      * @param video File obj of video that user asked to be deleted
      */
     public synchronized void downloadVideo (File video) throws IOException {
-        Address randomBroker = Node.BROKER_ADDRESSES.get(2);
+        Address randomBroker = Node.BROKER_ADDRESSES.get(0);
         ObjectOutputStream out = null;
         ObjectInputStream in = null;
         Socket appNodeRequestSocket;
@@ -106,8 +106,8 @@ public class AppNode extends Node {
             out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
             in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
             String videoChosen = video.getPath();
-            videoChosen = videoChosen.substring(0, videoChosen.indexOf("$"));
-            out.writeObject(new VideoFile(new File(videoChosen)));
+            videoChosen = videoChosen.substring (videoChosen.indexOf("$"), videoChosen.lastIndexOf("$"));
+            out.writeObject(new VideoFile(video));
             out.flush();
             out.writeObject(this);
             out.flush();

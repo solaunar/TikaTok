@@ -35,7 +35,9 @@ public class AppNodeActionsForBrokers extends Thread {
             Object request = in.readObject();
             if (request instanceof VideoFile){
                 System.out.println("Broker asked for a specific video file.");
-                File video = ((VideoFile) request).getFile();
+                String path = ((VideoFile) request).getFile().getPath();
+                path = path.substring(0, path.indexOf("$"));
+                File video = new File(path);
                 ArrayList<VideoFile> chunks = chunkVideo(video);
                 for (VideoFile chunk : chunks) {
                     push(chunk);
