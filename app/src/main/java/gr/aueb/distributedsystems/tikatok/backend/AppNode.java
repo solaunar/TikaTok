@@ -1,5 +1,7 @@
 package gr.aueb.distributedsystems.tikatok.backend;
 
+import android.os.Environment;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.net.ServerSocket;
@@ -86,6 +88,66 @@ public class AppNode extends Node {
      */
     public boolean compare(AppNode appNode) {
         return this.getAddress().compare(appNode.getAddress());
+    }
+
+    /**
+     * method downloadVideo sends the video File obj to Appnode requesting it
+     *                    and stores it in the downloads folder of that user
+     * @param video File obj of video that user asked to be deleted
+     */
+    public synchronized void downloadVideo (File video) throws IOException {
+        Address randomBroker = Node.BROKER_ADDRESSES.get(2);
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
+        Socket appNodeRequestSocket;
+
+        try {
+            appNodeRequestSocket = new Socket(randomBroker.getIp(), randomBroker.getPort());
+            out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
+            in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
+            String videoChosen = video.getPath();
+            videoChosen = videoChosen.substring(0, videoChosen.indexOf("$"));
+            out.writeObject(new VideoFile(new File(videoChosen)));
+            out.flush();
+            out.writeObject(this);
+            out.flush();
+
+            ArrayList<VideoFile> chunks = new ArrayList<>();
+            while (true) {
+                Object response = null;
+                try {
+                    response = in.readObject();
+                    if (response.equals("NO MORE CHUNKS")) break;
+                    chunks.add((VideoFile) response);
+                    System.out.println("Received chunk");
+                    out.writeObject("RECEIVED");
+                    out.flush();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            out.writeObject("EXIT");
+            out.flush();
+            System.out.println("[Broker]: " + in.readObject());
+            in.close();
+            out.close();
+            appNodeRequestSocket.close();
+
+            String videoPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
+            System.out.println(videoPath + videoChosen.toLowerCase() + ".mp4");
+            FileOutputStream fos = new FileOutputStream(videoPath + videoChosen.toLowerCase() + ".mp4");
+            int i = 0;
+            for (VideoFile chunk : chunks) {
+                i++;
+                fos.write(chunk.getData());
+            }
+            fos.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

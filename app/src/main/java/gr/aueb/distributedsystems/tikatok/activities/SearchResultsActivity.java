@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
     ImageButton btnHome;
     ImageButton btnLogout;
     TextView txtResultsForMsg;
+    AppNode appNode;
 
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
@@ -45,6 +50,12 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+        System.out.println(ip);
+        Address address = new Address(ip, 12000);
+        appNode = new AppNode(address);
 
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
@@ -101,6 +112,19 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
         });
     }
 
+    private class DownloadVideoTask extends AsyncTask<File, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(File... videos) {
+            try {
+                user.downloadVideo(videos[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
     private void goToLogout(AppNode user) {
         Intent logoutActivityScreen = new Intent(getApplicationContext(), MainActivity.class);
         logoutActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
@@ -140,7 +164,8 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
 
     @Override
     public void onDownload(File video) {
-
+        SearchResultsActivity.DownloadVideoTask downloadVideoTask = new SearchResultsActivity.DownloadVideoTask();
+        downloadVideoTask.execute(video);
     }
 
     @Override
