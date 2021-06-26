@@ -44,6 +44,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
     Button btnMyVids;
     Button btnUpload;
     ImageButton btnLogout;
+    ImageButton btnHome;
 
     NotificationCompat.Builder builder;
     NotificationManagerCompat notificationManagerCompat;
@@ -92,6 +93,14 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
             @Override
             public void onClick(View v) {
                 goToSubs(user);
+            }
+        });
+
+        btnHome = findViewById(R.id.btnLoginSearchResults);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHome(user);
             }
         });
 
@@ -171,6 +180,12 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
         Intent logoutActivityScreen = new Intent(getApplicationContext(), MainActivity.class);
         logoutActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
         startActivity(logoutActivityScreen);
+    }
+
+    private void goToHome(AppNode user) {
+        Intent homeActivityScreen = new Intent(getApplicationContext(), SearchActivity.class);
+        homeActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(homeActivityScreen);
     }
 
     private void goToUploads(AppNode user) {

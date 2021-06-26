@@ -29,6 +29,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
     AppNode user;
 
     /**Toolbar Buttons*/
+    Button btnSubs;
     Button btnMyVids;
     Button btnUpload;
     ImageButton btnHome;
@@ -50,6 +51,14 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
         FileVideoTitleRecyclerViewAdapter adapter = new FileVideoTitleRecyclerViewAdapter(getVideos(), this);
         subbedFragment.setAdapter(adapter);
         /** Toolbar Buttons */
+
+        btnSubs = findViewById(R.id.btnSubsActionSearchResults);
+        btnSubs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSubs(user);
+            }
+        });
 
         btnMyVids = findViewById(R.id.btnMyVideosActionSubscribedVideos);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +92,13 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
+
+    }
+
+    private void goToSubs(AppNode user) {
+        Intent SubsActivityScreen = new Intent(getApplicationContext(), SubscribedVideosActivity.class);
+        SubsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(SubsActivityScreen);
     }
 
     private void goToLogout(AppNode user) {

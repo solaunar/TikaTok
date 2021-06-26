@@ -43,6 +43,7 @@ public class UploadVideoActivity extends AppCompatActivity {
     /**Toolbar Buttons*/
     Button btnSubs;
     Button btnMyVids;
+    Button btnUploadActivity;
     Button btnRecord;
     ImageButton btnHome;
     ImageButton btnLogout;
@@ -125,6 +126,14 @@ public class UploadVideoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goToSubs(user);
+            }
+        });
+
+        btnUploadActivity = findViewById(R.id.btnUploadActionSearchResults);
+        btnUploadActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToUploads(user);
             }
         });
 
@@ -293,6 +302,12 @@ public class UploadVideoActivity extends AppCompatActivity {
         Intent homeActivityScreen = new Intent(getApplicationContext(), SearchActivity.class);
         homeActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
         startActivity(homeActivityScreen);
+    }
+
+    private void goToUploads(AppNode user) {
+        Intent uploadsActivityScreen = new Intent(getApplicationContext(), UploadVideoActivity.class);
+        uploadsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(uploadsActivityScreen);
     }
 
     private void goToMyVids(AppNode user) {

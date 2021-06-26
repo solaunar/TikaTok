@@ -28,6 +28,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
 
     /**Toolbar Buttons*/
     Button btnSubs;
+    Button btnMyVids;
     Button btnUpload;
     ImageButton btnHome;
     ImageButton btnLogout;
@@ -56,6 +57,14 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
             @Override
             public void onClick(View v) {
                 goToSubs(user);
+            }
+        });
+
+        btnMyVids = findViewById(R.id.btnMyVideosActionSearchResults);
+        btnMyVids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMyVids(user);
             }
         });
 
@@ -106,6 +115,12 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
         Intent SubsActivityScreen = new Intent(getApplicationContext(), SubscribedVideosActivity.class);
         SubsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
         startActivity(SubsActivityScreen);
+    }
+
+    private void goToMyVids(AppNode user) {
+        Intent myVidsActivityScreen = new Intent(getApplicationContext(), MyVideosActivity.class);
+        myVidsActivityScreen.putExtra(SearchResultsActivity.APPNODE_USER, user);
+        startActivity(myVidsActivityScreen);
     }
 
     @Override
