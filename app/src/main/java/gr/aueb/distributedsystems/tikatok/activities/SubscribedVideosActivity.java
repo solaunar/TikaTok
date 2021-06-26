@@ -41,6 +41,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
 
         Intent i = getIntent();
         user = (AppNode) i.getSerializableExtra(APPNODE_USER);
+        user.updateOnSubscriptions();
         System.out.println("SubscribedVideosActivity user: " + user.getChannel());
 
         setContentView(R.layout.activity_subscribed_videos);
