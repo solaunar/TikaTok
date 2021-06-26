@@ -269,8 +269,10 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
             ArrayList<File> videosAssociated = allVideosByTopic.get(topic);
             if (videosAssociated == null) continue;
             for (File video : videosAssociated)
-                if(userVideos== null)
-                    topics.add(topic);
+                if(userVideos== null){
+                    if (!topics.contains(topic))
+                        topics.add(topic);
+                }
                 else {
                     if (!userVideos.contains(video))
                         topics.add(topic);
