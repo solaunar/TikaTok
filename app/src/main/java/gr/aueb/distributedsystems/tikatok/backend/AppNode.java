@@ -106,7 +106,7 @@ public class AppNode extends Node {
             out = new ObjectOutputStream(appNodeRequestSocket.getOutputStream());
             in = new ObjectInputStream(appNodeRequestSocket.getInputStream());
             String videoChosen = video.getPath();
-            videoChosen = videoChosen.substring (videoChosen.indexOf("$"), videoChosen.lastIndexOf("$"));
+            videoChosen = videoChosen.substring (videoChosen.indexOf("$") + 1, videoChosen.lastIndexOf("$")) + "-" + videoChosen.substring(videoChosen.lastIndexOf("$")+1);
             out.writeObject(new VideoFile(video));
             out.flush();
             System.out.println(in.readObject());
@@ -298,13 +298,16 @@ public class AppNode extends Node {
     public synchronized ArrayList<String> updateOnSubscriptions(){
         ArrayList<String> updatedTopics = new ArrayList<>();
         for (String topic: subscribedTopics.keySet()){
-            ArrayList<File> availableVideos = new ArrayList<>(infoTable.getAllVideosByTopic().get(topic));
+            ArrayList<File> availableVideos = null;
+            if(infoTable.getAllVideosByTopic().containsKey(topic))
+                availableVideos = new ArrayList<>(infoTable.getAllVideosByTopic().get(topic));
             if (getChannel().getAllHashtagsPublished().contains(topic)){
                 availableVideos.removeAll(getChannel().getUserVideosByHashtag().get(topic));
             }
             if(!subscribedTopics.get(topic).equals(availableVideos)){
                 updatedTopics.add(topic);
-                subscribedTopics.replace(topic, availableVideos);
+                subscribedTopics.remove(topic);
+                subscribedTopics.put(topic, availableVideos);
             }
         }
         return updatedTopics;

@@ -159,6 +159,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FileVide
     public void onPlay(File video) {
         Intent videoStrActivityScreen = new Intent(getApplicationContext(), VideoStreamActivity.class);
         videoStrActivityScreen.putExtra(VideoStreamActivity.APPNODE_USER, user);
+        videoStrActivityScreen.putExtra(VideoStreamActivity.VIDEO, video);
         startActivity(videoStrActivityScreen);
     }
 

@@ -24,7 +24,7 @@
             android:id="@+id/btnLoginSubscribedVideos"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="7dp"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_home_app"
             tools:layout_editor_absoluteX="180dp"
             tools:layout_editor_absoluteY="577dp" />
@@ -79,7 +79,7 @@
         android:text="Subscribed Videos"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarSubscribedVideos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
     <fragment
         android:id="@+id/fragmentSubscribedVideos"
         android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentOtherUserVideos.FileVideoTitleFragment"
-        android:layout_width="375dp"
+        android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

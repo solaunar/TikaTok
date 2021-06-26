@@ -6,4 +6,6 @@
     <string name="txtLogin">LOG IN</string>
     <string name="txtSearchTopics">Search for any hashtag or channel name</string>
     <string name="ok">OK!</string>
+    <string name="channel_name">tikatokChannel</string>
+    <string name="channel_description">Channel for subscriptions notifications</string>
 </resources>

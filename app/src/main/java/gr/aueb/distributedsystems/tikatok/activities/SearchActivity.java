@@ -2,10 +2,15 @@ package gr.aueb.distributedsystems.tikatok.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +45,8 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
     Button btnUpload;
     ImageButton btnLogout;
 
+    NotificationCompat.Builder builder;
+    NotificationManagerCompat notificationManagerCompat;
     static final String APPNODE_USER = "appNode_user";
     AppNode user;
 
@@ -64,6 +71,15 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
         SearchActivity.GetInfoTableTask getInfoTableTask = new SearchActivity.GetInfoTableTask();
         getInfoTableTask.execute("CONNECT_TO_BROKER");
         setContentView(R.layout.activity_search);
+
+        createNotificationChannel();
+        builder = new NotificationCompat.Builder(this, "tikatok")
+                .setSmallIcon(R.drawable.tikatoktwxt)
+                .setContentTitle("Check your subscriptions!")
+                .setContentText("There is new content!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        notificationManagerCompat = NotificationManagerCompat.from(this);
+
 
         topicFragment = findViewById(R.id.fragmentAvailable);
         StringTopicRecyclerViewAdapter adapter = new StringTopicRecyclerViewAdapter(getTopics(), this);
@@ -208,10 +224,12 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
                                 //print the list of videos
                                 HashMap<String, ArrayList<File>> updatedSubscriptions = user.getSubscribedTopics();
                                 System.out.println("Saving the list of videos of topics you are subscribed to...");
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        showErrorMessage("Subscriptions", "New videos!");
+                                        notificationManagerCompat.notify(100, builder.build());
+                                        //showErrorMessage("Subscriptions", "New videos!");
                                     }
                                 });
                             }
@@ -257,6 +275,22 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
                     if (!userVideos.contains(video))
                         topics.add(topic);
                 }
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("tikatok", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

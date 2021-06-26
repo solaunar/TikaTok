@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,12 +112,14 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
     public void onPlay(File video) {
         Intent videoStrActivityScreen = new Intent(getApplicationContext(), VideoStreamActivity.class);
         videoStrActivityScreen.putExtra(VideoStreamActivity.APPNODE_USER, user);
+        videoStrActivityScreen.putExtra(VideoStreamActivity.VIDEO, video);
         startActivity(videoStrActivityScreen);
     }
 
     @Override
     public void onDownload(File video) {
-
+        DownloadVideoTask downloadVideoTask = new DownloadVideoTask();
+        downloadVideoTask.execute(video);
     }
 
     @Override
@@ -126,5 +130,18 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
         for (String topic : topics)
             subbed_videos.addAll(subscribedTopics.get(topic));
         return subbed_videos;
+    }
+
+    private class DownloadVideoTask extends AsyncTask<File, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(File... videos) {
+            try {
+                user.downloadVideo(videos[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

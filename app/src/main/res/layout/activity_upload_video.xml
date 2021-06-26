@@ -140,7 +140,7 @@
             android:id="@+id/btnLoginUploadVideo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="7dp"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_home_app"
             tools:layout_editor_absoluteX="180dp"
             tools:layout_editor_absoluteY="577dp" />

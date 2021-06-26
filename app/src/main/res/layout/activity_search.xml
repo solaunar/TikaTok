@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/fragmentAvailable"
         android:name="gr.aueb.distributedsystems.tikatok.activities.fragmentTopics.StringTopicFragment"
-        android:layout_width="412dp"
+        android:layout_width="match_parent"
         android:layout_height="321dp"
         android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +89,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="7dp"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_home_app"
             tools:layout_editor_absoluteX="180dp"
             tools:layout_editor_absoluteY="577dp" />
