@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -82,16 +83,12 @@ public class UploadVideoActivity extends AppCompatActivity {
                    Log.i("VIDEO_PATH", "Video path set as: " + formattedDirectory);
                    user.uploadVideo(formattedDirectory, hashtagsList);
                    if(!user.isPublisher()){
-                       user.setPublisher(true);
-                       Thread t = new Thread(new Runnable() {
-                           @Override
-                           public void run() {
-                               user.connectToBroker();
-                           }
-                       });
-                       t.start();
-                       openAppNodeServer();
+                       OpenAppNodeServerTask openAppNodeServerTask = new OpenAppNodeServerTask();
+                       openAppNodeServerTask.doInBackground("OPEN_SERVER");
                    }
+                   user.setPublisher(true);
+                   UploadVideoActivity.GetInfoTableTask getInfoTableTask = new UploadVideoActivity.GetInfoTableTask();
+                   getInfoTableTask.execute("CONNECT_TO_BROKER");
                    System.out.println(hashtagsList);
                }
             }
@@ -139,6 +136,39 @@ public class UploadVideoActivity extends AppCompatActivity {
                 goToLogout(user);
             }
         });
+    }
+
+    private class GetInfoTableTask extends AsyncTask<String, String, AppNode> {
+
+        @Override
+        protected AppNode doInBackground(String... strings) {
+            if(strings[0].equals("CONNECT_TO_BROKER"))
+                return user.connectToBroker();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(AppNode appNode) {
+            super.onPostExecute(appNode);
+            user = appNode;
+        }
+    }
+
+    private class OpenAppNodeServerTask extends AsyncTask<String, String, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            if(strings[0].equals("OPEN_SERVER")){
+                Thread server = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        user.openAppNodeServer();
+                    }
+                });
+                server.start();
+            }
+            return null;
+        }
     }
 
     private boolean isValidTitle() {

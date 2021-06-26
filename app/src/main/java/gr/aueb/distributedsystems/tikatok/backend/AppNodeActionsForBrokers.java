@@ -61,13 +61,13 @@ public class AppNodeActionsForBrokers extends Thread {
      */
     public ArrayList<VideoFile> chunkVideo(File file) {
         ArrayList<VideoFile> chunks = new ArrayList<>();
-        File peepee = new File(file.getPath());
+        File video = new File(file.getPath());
         int sizeOfChunk = 1024 * 512;// 0.5MB = 512KB
         byte[] buffer;
         try {
             BodyContentHandler handler = new BodyContentHandler();
             Metadata metadata = new Metadata();
-            FileInputStream inputstream = new FileInputStream(peepee);
+            FileInputStream inputstream = new FileInputStream(video);
             ParseContext pcontext = new ParseContext();
             MP4Parser MP4Parser = new MP4Parser();
             MP4Parser.parse(inputstream, handler, metadata, pcontext);

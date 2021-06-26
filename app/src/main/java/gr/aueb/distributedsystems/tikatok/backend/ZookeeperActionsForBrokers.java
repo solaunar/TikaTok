@@ -100,9 +100,11 @@ public class ZookeeperActionsForBrokers extends Thread {
         }
         System.out.println("[Zookeeper]: Updated InfoTable.");
         System.out.println(zookeeper.getInfoTable());
-        System.out.println(zookeeper.getInfoTable().getAllVideosByTopic());
-        System.out.println(zookeeper.getInfoTable().getAvailablePublishers());
-        System.out.println(zookeeper.getInfoTable().getAvailableTopics());
+        System.out.println("Topics associated with brokers: " + zookeeper.getInfoTable().getTopicsAssociatedWithBrokers());
+        System.out.println("Hashing ID associated with brokers: " + zookeeper.getInfoTable().getHashingIDAssociatedWithBrokers());
+        System.out.println("All videos by topic: " + zookeeper.getInfoTable().getAllVideosByTopic());
+        System.out.println("Available Publishers: " + zookeeper.getInfoTable().getAvailablePublishers());
+        System.out.println("Available topics: " + zookeeper.getInfoTable().getAvailableTopics());
         out.writeObject(zookeeper.getInfoTable());
         out.flush();
         out.writeObject("[Zookeeper]: Sent updated info table.");
@@ -128,6 +130,12 @@ public class ZookeeperActionsForBrokers extends Thread {
                 out.flush();
             }
         }
+        System.out.println(zookeeper.getInfoTable());
+        System.out.println("Topics associated with brokers: " + zookeeper.getInfoTable().getTopicsAssociatedWithBrokers());
+        System.out.println("Hashing ID associated with brokers: " + zookeeper.getInfoTable().getHashingIDAssociatedWithBrokers());
+        System.out.println("All videos by topic: " + zookeeper.getInfoTable().getAllVideosByTopic());
+        System.out.println("Available Publishers: " + zookeeper.getInfoTable().getAvailablePublishers());
+        System.out.println("Available topics: " + zookeeper.getInfoTable().getAvailableTopics());
     }
 
     public synchronized void updateInfoTable(AppNode appNode, ArrayList<String> allHashtagsPublished, ArrayList<File> allVideosPublished, HashMap<String, ArrayList<File>> userVideosByHashtag, boolean isPublisher, Address broker) throws IOException {
@@ -186,9 +194,11 @@ public class ZookeeperActionsForBrokers extends Thread {
         }
         System.out.println("[Zookeeper]: Updated InfoTable.");
         System.out.println(zookeeper.getInfoTable());
-        System.out.println(zookeeper.getInfoTable().getAllVideosByTopic());
-        System.out.println(zookeeper.getInfoTable().getAvailablePublishers());
-        System.out.println(zookeeper.getInfoTable().getAvailableTopics());
+        System.out.println("Topics associated with brokers: " + zookeeper.getInfoTable().getTopicsAssociatedWithBrokers());
+        System.out.println("Hashing ID associated with brokers: " + zookeeper.getInfoTable().getHashingIDAssociatedWithBrokers());
+        System.out.println("All videos by topic: " + zookeeper.getInfoTable().getAllVideosByTopic());
+        System.out.println("Available Publishers: " + zookeeper.getInfoTable().getAvailablePublishers());
+        System.out.println("Available topics: " + zookeeper.getInfoTable().getAvailableTopics());
         out.writeObject(zookeeper.getInfoTable());
         out.flush();
         out.writeObject("[Zookeeper]: Sent updated info table.");

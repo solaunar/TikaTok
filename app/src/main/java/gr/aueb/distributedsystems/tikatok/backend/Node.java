@@ -8,9 +8,9 @@ import java.util.Arrays;
 public class Node implements Serializable {
     //Broker Addresses (ip, port)
     static public final ArrayList<Address> BROKER_ADDRESSES = new ArrayList<>(Arrays.asList(
-            new Address("10.0.2.2", 5000),
-            new Address("10.0.2.2", 5250),
-            new Address("10.0.2.2", 5500)));
+            new Address("192.168.1.4", 5000),
+            new Address("192.168.1.4", 5250),
+            new Address("192.168.1.4", 5500)));
 
     //AppNode Addresses (ip, port)
     static public final ArrayList<Address> APPNODE_ADDRESSES = new ArrayList<>(Arrays.asList(
@@ -20,7 +20,7 @@ public class Node implements Serializable {
             new Address("127.0.0.1", 7750)));
 
     //Zookeeper Address (ip, port)
-    static public final Address ZOOKEEPER_ADDRESS = new Address("127.0.0.1", 10000);
+    static public final Address ZOOKEEPER_ADDRESS = new Address("192.168.1.4", 10000);
 
     //backlog
     static public final int BACKLOG = 250;

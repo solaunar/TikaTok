@@ -173,12 +173,15 @@ public class BrokerActionsForAppNodes extends Thread {
         Socket brokerSocket;
         ObjectOutputStream brokerSocketOut;
         ObjectInputStream brokerSocketIn;
+        System.out.println("Request videofile: " + videoFile.getFile());
         //iterate though the registered publishers to find the one with the video
         for (AppNode user: broker.getRegisteredPublishers()){
             if (consumer.compare(user)) continue;
             ArrayList<File> allVideosPublished = broker.getInfoTable().getAllVideosByTopic().get(user.getChannel().getChannelName());
+            System.out.println("All videos published: " + allVideosPublished);
             for (File video : allVideosPublished){
-                if (video.equals(videoFile.getFile())){
+                System.out.println(video);
+                if (video.getPath().equals(videoFile.getFile().getPath())){
                     publisherServer = user.getAddress().getPort();
                     publisherIP = user.getAddress().getIp();
                     break;

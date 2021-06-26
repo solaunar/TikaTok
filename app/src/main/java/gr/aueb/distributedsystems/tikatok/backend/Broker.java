@@ -151,7 +151,7 @@ public class Broker extends Node {
             System.out.println("Unsupported hashing");
         }
         byte[] digest = md.digest(bytesOfMessage);
-        brokerID = new BigInteger(digest);
+        brokerID = new BigInteger(1, digest);
     }
 
 
@@ -174,6 +174,14 @@ public class Broker extends Node {
             brokerSocketOut.writeObject(brokerID);
             brokerSocketOut.flush();
             System.out.println(brokerSocketIn.readObject());
+//            System.out.println(this.getInfoTable());
+//            System.out.println("Topics associated with brokers:" + this.getInfoTable().getTopicsAssociatedWithBrokers());
+//            System.out.println("Hashing id associated with brokers:" + this.getInfoTable().getHashingIDAssociatedWithBrokers());
+//            System.out.println("All videos by topic: " + this.getInfoTable().getAllVideosByTopic());
+//            System.out.println("Available publishers: " + this.getInfoTable().getAvailablePublishers());
+//            System.out.println("Available topics: "+ this.getInfoTable().getAvailableTopics());
+//            System.out.println("Registered publishers: " + this.getRegisteredPublishers());
+//            System.out.println("Registered consumers: " + this.getRegisteredConsumers());
             brokerSocketIn.close();
             brokerSocketOut.close();
             brokerSocket.close();
@@ -232,6 +240,14 @@ public class Broker extends Node {
             setAvailablePublishers(infoTable.getAvailablePublishers());
             setRegisteredPublishers();
             System.out.println(brokerSocketIn.readObject());
+            System.out.println(this.getInfoTable());
+            System.out.println("Topics associated with brokers:" + this.getInfoTable().getTopicsAssociatedWithBrokers());
+            System.out.println("Hashing id associated with brokers:" + this.getInfoTable().getHashingIDAssociatedWithBrokers());
+            System.out.println("All videos by topic: " + this.getInfoTable().getAllVideosByTopic());
+            System.out.println("Available publishers: " + this.getInfoTable().getAvailablePublishers());
+            System.out.println("Available topics: "+ this.getInfoTable().getAvailableTopics());
+            System.out.println("Registered publishers: " + this.getRegisteredPublishers());
+            System.out.println("Registered consumers: " + this.getRegisteredConsumers());
             brokerSocketIn.close();
             brokerSocketOut.close();
             brokerSocket.close();
@@ -282,6 +298,15 @@ public class Broker extends Node {
             setAvailablePublishers(infoTable.getAvailablePublishers());
             setRegisteredPublishers();
             System.out.println(brokerSocketIn.readObject());
+
+            System.out.println(this.getInfoTable());
+            System.out.println("Topics associated with brokers:" + this.getInfoTable().getTopicsAssociatedWithBrokers());
+            System.out.println("Hashing id associated with brokers:" + this.getInfoTable().getHashingIDAssociatedWithBrokers());
+            System.out.println("All videos by topic: " + this.getInfoTable().getAllVideosByTopic());
+            System.out.println("Available publishers: " + this.getInfoTable().getAvailablePublishers());
+            System.out.println("Available topics: "+ this.getInfoTable().getAvailableTopics());
+            System.out.println("Registered publishers: " + this.getRegisteredPublishers());
+            System.out.println("Registered consumers: " + this.getRegisteredConsumers());
             brokerSocketIn.close();
             brokerSocketOut.close();
             brokerSocket.close();

@@ -465,7 +465,7 @@ public class AppNode extends Node {
             System.out.println("Unsupported hashing");
         }
         byte[] digest = md.digest(bytesOfMessage);
-        BigInteger hashTopic = new BigInteger(digest);
+        BigInteger hashTopic = new BigInteger(1, digest);
         ArrayList<BigInteger> brokers = new ArrayList<>(hashIDAssociatedWithBrokers.values());
         Collections.sort(brokers);
         BigInteger maxID = brokers.get(brokers.size() - 1);

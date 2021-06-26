@@ -242,6 +242,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
 
     public void filterTopicsFromInfoTable(){
         InfoTable infoTable = user.getInfoTable();
+        if (infoTable==null) return;
         //System.out.println(infoTable);
         HashMap<String, ArrayList<File>> allVideosByTopic = infoTable.getAllVideosByTopic();
         ArrayList<String> availableTopics = infoTable.getAvailableTopics();
