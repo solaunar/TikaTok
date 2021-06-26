@@ -109,24 +109,18 @@ public class AppNode extends Node {
             videoChosen = videoChosen.substring (videoChosen.indexOf("$"), videoChosen.lastIndexOf("$"));
             out.writeObject(new VideoFile(video));
             out.flush();
+            System.out.println(in.readObject());
             out.writeObject(this);
             out.flush();
 
             ArrayList<VideoFile> chunks = new ArrayList<>();
             while (true) {
-                Object response = null;
-                try {
-                    response = in.readObject();
-                    if (response.equals("NO MORE CHUNKS")) break;
-                    chunks.add((VideoFile) response);
-                    System.out.println("Received chunk");
-                    out.writeObject("RECEIVED");
-                    out.flush();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Object response = in.readObject();
+                if (response.equals("NO MORE CHUNKS")) break;
+                chunks.add((VideoFile) response);
+                System.out.println("Received chunk");
+                out.writeObject("RECEIVED");
+                out.flush();
             }
             out.writeObject("EXIT");
             out.flush();

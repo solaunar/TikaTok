@@ -70,7 +70,7 @@ public class AppNodeActionsForBrokers extends Thread {
             FileInputStream inputstream = new FileInputStream(video);
             ParseContext pcontext = new ParseContext();
             MP4Parser MP4Parser = new MP4Parser();
-            MP4Parser.parse(inputstream, handler, metadata, pcontext);
+            //MP4Parser.parse(inputstream, handler, metadata, pcontext);
             FileInputStream fis = new FileInputStream(file);
             int chunkID = 0;
             int data_bytes;
@@ -84,7 +84,7 @@ public class AppNodeActionsForBrokers extends Thread {
             inputstream.close();
             fis.close();
             return chunks;
-        } catch (TikaException | IOException | SAXException e) {
+        } catch (IOException /*| TikaException | SAXException*/ e) {
             e.printStackTrace();
         }
         return null;

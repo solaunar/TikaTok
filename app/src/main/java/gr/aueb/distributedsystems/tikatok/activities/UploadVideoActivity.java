@@ -53,6 +53,8 @@ public class UploadVideoActivity extends AppCompatActivity {
     private static int VIDEO_REQUEST = 101;
     private Uri videoUri;
     private String videoTitle;
+    private String videoPath;
+    Button btnBrowse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,10 @@ public class UploadVideoActivity extends AppCompatActivity {
                else{
                    Log.i("VIDEO_TITLE", "Video Title set as: " + videoTitle);
                    ArrayList<String> hashtagsList = getHashtags();
-                   String formattedDirectory = videoUri.getPath() + "$" + videoTitle + "$" + user.getChannel().getChannelName();
+                   Log.i("URI_ACTUAL_PATH", "Uri set as: " + videoPath);
+                   Log.i("URI_ACTUAL_PATH", "Uri set as: " + getFilePathFromContentUri(videoUri, getContentResolver()));
+
+                   String formattedDirectory = videoPath + "$" + videoTitle + "$" + user.getChannel().getChannelName();
                    Log.i("VIDEO_PATH", "Video path set as: " + formattedDirectory);
                    user.uploadVideo(formattedDirectory, hashtagsList);
                    if(!user.isPublisher()){
@@ -101,6 +106,16 @@ public class UploadVideoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 startActivityForResult(intent, VIDEO_REQUEST);
+            }
+        });
+
+        btnBrowse = findViewById(R.id.btnBrowse);
+        btnBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fileIntent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.INTERNAL_CONTENT_URI);
+                fileIntent.setType("video/*");
+                startActivityForResult(fileIntent, VIDEO_REQUEST);
             }
         });
 
@@ -220,6 +235,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 cursor.close();
             }
         }
+        Log.i("RESULT_GET_FILENAME", "here it is: " + result);
         if (result == null) {
             result = uri.getPath();
             int cut = result.lastIndexOf('/');
@@ -227,6 +243,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 result = result.substring(cut + 1);
             }
         }
+        Log.i("RESULT_GET_FILENAME", "here it is: " + result);
         return result;
     }
 
@@ -239,7 +256,7 @@ public class UploadVideoActivity extends AppCompatActivity {
     /** File Chooser */
     public void openFileChooser(View view){
         Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        fileIntent.setType("*/*");
+        //fileIntent.setType("*/*");
         startActivityForResult(fileIntent, VIDEO_REQUEST);
     }
 
@@ -251,7 +268,10 @@ public class UploadVideoActivity extends AppCompatActivity {
             VideoView videoView = new VideoView(this);
             data.getDataString();
             videoUri = data.getData();
+            videoPath = getFilePathFromContentUri(videoUri, getContentResolver());
             Log.i("VIDEO_TB_UPLOADED", "Video available at " + videoUri.toString());
+            Log.i("URI_ACTUAL_PATH", "Uri set as: " + getFilePathFromContentUri(data.getData(), getContentResolver()));
+            Log.i("URI_ACTUAL_PATH", "Uri set as: " + videoPath);
             //Log.i("VIDEO_TB_UPLOADED", "Video available at path " + new File(videoUri.getPath()));
 
             videoView.setVideoURI(data.getData());
