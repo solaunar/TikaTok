@@ -96,7 +96,8 @@ public class AppNode extends Node {
      * @param video File obj of video that user asked to be deleted
      */
     public synchronized void downloadVideo (File video) throws IOException {
-        Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+        String path = video.getPath();
+        Address randomBroker = find(path.substring(path.lastIndexOf("$")+1));
         ObjectOutputStream out = null;
         ObjectInputStream in = null;
         Socket appNodeRequestSocket;
@@ -204,7 +205,10 @@ public class AppNode extends Node {
     public AppNode updateOnDelete(File toBeDeleted){
         try {
             if (this.isPublisher()) {
-                Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+                System.out.println("[Consumer]: Connecting to a random Broker.");
+                Random random = new Random();
+                int randomBrokerIndex = random.ints(0, Node.BROKER_ADDRESSES.size()).findFirst().getAsInt();
+                Address randomBroker = Node.BROKER_ADDRESSES.get(randomBrokerIndex);
                 ObjectOutputStream out;
                 ObjectInputStream in;
                 Socket appNodeRequestSocket;
@@ -249,7 +253,10 @@ public class AppNode extends Node {
     public AppNode updateInfoTableOnSubscribe(String topic){
         if (this.getSubscribedTopics().containsKey(topic)) return null;
         try {
-                Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+            System.out.println("[Consumer]: Connecting to a random Broker.");
+            Random random = new Random();
+            int randomBrokerIndex = random.ints(0, Node.BROKER_ADDRESSES.size()).findFirst().getAsInt();
+            Address randomBroker = Node.BROKER_ADDRESSES.get(randomBrokerIndex);
                 ObjectOutputStream out;
                 ObjectInputStream in;
                 Socket appNodeRequestSocket;
@@ -483,7 +490,10 @@ public class AppNode extends Node {
 
     public AppNode connectToBroker(){
         try {
-            Address randomBroker = Node.BROKER_ADDRESSES.get(0);
+            System.out.println("[Consumer]: Connecting to a random Broker.");
+            Random random = new Random();
+            int randomBrokerIndex = random.ints(0, Node.BROKER_ADDRESSES.size()).findFirst().getAsInt();
+            Address randomBroker = Node.BROKER_ADDRESSES.get(randomBrokerIndex);
             ObjectOutputStream out;
             ObjectInputStream in;
             Socket appNodeRequestSocket;
