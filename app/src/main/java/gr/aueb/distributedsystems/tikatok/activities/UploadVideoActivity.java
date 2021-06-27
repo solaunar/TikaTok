@@ -129,7 +129,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             }
         });
 
-        btnUploadActivity = findViewById(R.id.btnUploadActionSearchResults);
+        btnUploadActivity = findViewById(R.id.btnUploadActionUploadVideo);
         btnUploadActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

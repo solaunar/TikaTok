@@ -60,7 +60,7 @@ public class MyVideosActivity extends AppCompatActivity implements MyFileVideoTi
             }
         });
 
-        btnMyVids = findViewById(R.id.btnMyVideosActionSearchResults);
+        btnMyVids = findViewById(R.id.btnMyVideosAction);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

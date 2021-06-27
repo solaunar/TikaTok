@@ -60,7 +60,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
-        btnMyVids = findViewById(R.id.btnMyVideosActionSubscribedVideos);
+        btnMyVids = findViewById(R.id.btnSubsActionSubscribedVideos);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

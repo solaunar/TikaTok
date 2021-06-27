@@ -96,7 +96,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
             }
         });
 
-        btnHome = findViewById(R.id.btnLoginSearchResults);
+        btnHome = findViewById(R.id.btnLogin);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
