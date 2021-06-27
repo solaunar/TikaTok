@@ -5,6 +5,7 @@ Users can search for topics (channels, hashtags), subscribe to topics, stream vi
 
 ### Built With <a name="built"></a>
 * [Java 1.16](https://docs.oracle.com/en/java/javase/16/docs/api/index.html)
+* [Android Studio](https://developer.android.com/studio)
 
 ## Nodes Description
 ### Zookeeper
@@ -41,6 +42,7 @@ The important data we mentioned could be:
 ### Requirements
    * Any Java distribution over 6.
    * Android Studio (for emulator use and download on Android Devices) and/or any Android Device.
+   * Devices must have minimum SDK version of 26.
 
 ### Directions
 1. Clone the project to Android Studio.
