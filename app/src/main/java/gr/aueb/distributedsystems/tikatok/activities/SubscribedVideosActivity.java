@@ -52,7 +52,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
         subbedFragment.setAdapter(adapter);
         /** Toolbar Buttons */
 
-        btnSubs = findViewById(R.id.btnSubsActionSearchResults);
+        btnSubs = findViewById(R.id.btnSubsActionSubscribedVideos);
         btnSubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +60,7 @@ public class SubscribedVideosActivity extends AppCompatActivity implements FileV
             }
         });
 
-        btnMyVids = findViewById(R.id.btnSubsActionSubscribedVideos);
+        btnMyVids = findViewById(R.id.btnMyVideosActionSubscribedVideos);
         btnMyVids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static int CAMERA_PERMISSION = 100;
     private static int STORAGE_PERMISSION = 101;
+    static int port = 12000;
     TextView usernameTextView;
     Button loginBtn;
     AppNode appNode;
@@ -55,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
-        System.out.println(ip);
-        Address address = new Address(ip, 12000);
+        //System.out.println(ip);
+        Address address = new Address(ip, port);
+        port += 1000;
+        Log.i("APPNODE_IP_PORT", "IP: " + address.getIp() + "PORT: "+ address.getPort());
         appNode = new AppNode(address);
         usernameTextView = findViewById(R.id.editTxtUsername);
         loginBtn = findViewById(R.id.btnSubmitLogin);
