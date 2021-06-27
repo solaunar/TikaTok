@@ -3,6 +3,7 @@ Distributed application project for the couse of Distributed Systems at AUEB. <b
 Objective of this project was to implement a video streaming/ upload service based on the publisher/ subscriber model. <br>
 Users can search for topics (channels, hashtags), subscribe to topics, stream videos of other users and upload/ delete their own videos by using an android application.<br>
 Github repository link [here](https://github.com/solaunar/TikaTok).
+A small dataset of videos for the users, download on the emulators or the actual devices, [here](https://drive.google.com/file/d/1oLuhaRg0QIlOXzBN9X6N6BIzRsYdWuN_/view?usp=sharing).
 
 ### Built With <a name="built"></a>
 * [Java 1.16](https://docs.oracle.com/en/java/javase/16/docs/api/index.html)
