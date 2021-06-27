@@ -52,14 +52,14 @@ The important data we mentioned could be:
    * Different IPs for each address (ports can be the same or different).
    * Assign one IP and different ports to Zookeeper and all Brokers, and every similar combination.
 3. Download the apk of the Android App on your Android devices/ emulators by running the app on multiple devices.
-    #### Note: You may do this once and stop the run and then launch the downloaded app from your phone after you've completed step 4.
+    #### Note: You should do this before running all the other components and not login yet (add the username later, as in step 5).
 4. Make configurations for the mains and run them in this order:
    * Zookeeper main configuration.
    * Broker1 main configuration.
    * Broker2 main configuration.
    * Broker3 main configuration.
    #### Note: Brokers may run in any order.
-5. While the Zookeeper/ Brokers are running, launch the app and enter a username.
+5. While the Zookeeper/ Brokers are running enter a username.
 6. You're all set!
 
 ## Collaborators 
