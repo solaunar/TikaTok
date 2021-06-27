@@ -1,8 +1,8 @@
 package gr.aueb.distributedsystems.tikatok.backend;
 
-import org.apache.tika.metadata.Metadata;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * VideoFile class implements Serializable
@@ -21,7 +21,7 @@ public class VideoFile implements Serializable {
     private byte[] data;
 
     //Metadata of file extracted by Apache Tika
-    private Metadata metadata;
+    private ArrayList<String> metadata;
 
     //ID of this VideoFile chunk
     private int chunkID, data_bytes;
@@ -42,7 +42,7 @@ public class VideoFile implements Serializable {
      * @param data_bytes
      */
 
-    public VideoFile(byte[] data, Metadata metadata, int chunkID, int data_bytes) {
+    public VideoFile(byte[] data, ArrayList<String> metadata, int chunkID, int data_bytes) {
         this.data = data;
         this.metadata = metadata;
         this.chunkID = chunkID;

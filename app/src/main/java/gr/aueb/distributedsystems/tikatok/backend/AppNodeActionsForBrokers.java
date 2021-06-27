@@ -1,15 +1,16 @@
 package gr.aueb.distributedsystems.tikatok.backend;
 
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.mp4.MP4Parser;
-import org.apache.tika.sax.BodyContentHandler;
-import org.xml.sax.SAXException;
+import android.media.MediaMetadataRetriever;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import static android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_FRAME_COUNT;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH;
+import static android.media.MediaMetadataRetriever.METADATA_KEY_YEAR;
 
 public class AppNodeActionsForBrokers extends Thread {
     ObjectInputStream in;
@@ -65,12 +66,20 @@ public class AppNodeActionsForBrokers extends Thread {
         int sizeOfChunk = 1024 * 512;// 0.5MB = 512KB
         byte[] buffer;
         try {
-            BodyContentHandler handler = new BodyContentHandler();
-            Metadata metadata = new Metadata();
+//            BodyContentHandler handler = new BodyContentHandler();
+//            Metadata metadata = new Metadata();
             FileInputStream inputstream = new FileInputStream(video);
-            ParseContext pcontext = new ParseContext();
-            MP4Parser MP4Parser = new MP4Parser();
-            //MP4Parser.parse(inputstream, handler, metadata, pcontext);
+//            ParseContext pcontext = new ParseContext();
+//            MP4Parser MP4Parser = new MP4Parser();
+//            MP4Parser.parse(inputstream, handler, metadata, pcontext);
+            MediaMetadataRetriever m = new MediaMetadataRetriever();
+            m.setDataSource(video.getPath());
+            ArrayList<String> metadata = new ArrayList<>();
+            metadata.add(m.extractMetadata(METADATA_KEY_VIDEO_WIDTH));
+            metadata.add(m.extractMetadata(METADATA_KEY_VIDEO_HEIGHT));
+            metadata.add(m.extractMetadata(METADATA_KEY_VIDEO_ROTATION));
+            metadata.add(m.extractMetadata(METADATA_KEY_VIDEO_FRAME_COUNT));
+            metadata.add(m.extractMetadata(METADATA_KEY_YEAR));
             FileInputStream fis = new FileInputStream(file);
             int chunkID = 0;
             int data_bytes;
