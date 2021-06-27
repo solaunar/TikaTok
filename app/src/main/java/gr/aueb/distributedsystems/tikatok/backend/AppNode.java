@@ -427,8 +427,8 @@ public class AppNode extends Node {
             appNodeServer.start();
         }
         //Creating a consumer actions handler in any use case
-        Thread appNodeConsumer = new AppNodeActionsForConsumers(this);
-        appNodeConsumer.start();
+        //Thread appNodeConsumer = new AppNodeActionsForConsumers(this);
+        //appNodeConsumer.start();
     }
 
     /**
