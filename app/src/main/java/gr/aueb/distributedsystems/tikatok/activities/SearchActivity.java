@@ -289,7 +289,7 @@ public class SearchActivity extends AppCompatActivity implements StringTopicFrag
                         topics.add(topic);
                 }
                 else {
-                    if (!userVideos.contains(video))
+                    if (!userVideos.contains(video) && !topics.contains(topic))
                         topics.add(topic);
                 }
         }
